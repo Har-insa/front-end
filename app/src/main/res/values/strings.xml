@@ -1,0 +1,47 @@
+<resources>
+<string name="app_name">Hardis Connect</string>
+
+<string name="action_settings">Settings</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+<string name="sports">Co-voiturage</string>
+<string name="divertissement">Evenemnt</string>
+<string name="technologie">Hardis life</string>
+
+
+    <string name="nav_item_home">Accueil</string>
+    <string name="nav_item_restaurant">Evenements</string>
+    <string name="nav_item_commander">Cinéma</string>
+    <string name="nav_item_carte">Musique</string>
+    <string name="nav_item_liste">Sport</string>
+    <string name="nav_item_a_proximite">Autres</string>
+    <string name="nav_item_services">Services</string>
+    <string name="nav_item_cinema">Co-voiturage</string>
+    <string name="nav_item_actualites">Gestion de frais</string>
+    <string name="nav_item_se_deconnecter">Se Deconnecter</string>
+    <string name="nav_item_mon_compte">Mon Compte</string>
+    <string name="nav_item_conitions_generales">Conditions Générales</string>
+    <string name="nav_item_personalisation_menu">Paramètres</string>
+    <string name="nav_item_simple_separator"></string>
+
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_restaurant</item>
+        <item>@string/nav_item_commander</item>
+        <item>@string/nav_item_carte</item>
+        <item>@string/nav_item_liste</item>
+        <item>@string/nav_item_a_proximite</item>
+        <item>@string/nav_item_services</item>
+        <item>@string/nav_item_cinema</item>
+        <item>@string/nav_item_actualites</item>
+        <item>@string/nav_item_simple_separator</item>
+        <item>@string/nav_item_mon_compte</item>
+        <item>@string/nav_item_personalisation_menu</item>
+        <item>@string/nav_item_simple_separator</item>
+        <item>@string/nav_item_conitions_generales</item>
+        <item>@string/nav_item_se_deconnecter</item>
+    </string-array>
+</resources>

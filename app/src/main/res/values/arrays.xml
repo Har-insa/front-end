@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="navigation_drawer_icons">
+        <item>@mipmap/ic_home_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+        <item>@mipmap/ic_list_black_24dp</item>
+    </string-array>
+
+
+
+</resources>

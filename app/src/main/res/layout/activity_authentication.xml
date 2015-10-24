@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".AuthentificationActivity"
+    android:background="@drawable/main_screen_background">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:touchscreenBlocksFocus="false"
+        android:weightSum="100">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="35"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/textViewHardisConnect"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/blue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="45dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:gravity="center_horizontal|top">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Username"
+                android:textColorHint="@color/hardis"
+                android:textColor="@color/navigationBarColor"
+                android:ems="10"
+                android:singleLine="true"
+                android:id="@+id/editTextId"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:singleLine="true"
+                android:textColorHint="@color/hardis"
+                android:textColor="@color/navigationBarColor"
+                android:id="@+id/editTextPassword"
+                android:hint="Password"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/editTextId"
+                android:layout_alignLeft="@+id/editTextId"
+                android:layout_alignStart="@+id/editTextId" />
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/hardis"
+                android:layout_alignParentTop="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Forgot your password ?"
+                android:id="@+id/textView"
+                android:layout_gravity="right"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="15"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="3dp"
+                android:text="Sign In"
+                android:background="@color/hardis"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_toRightOf="@+id/buttonLogin"
+                android:background="@color/orange"
+                android:paddingBottom="10dp"
+                android:paddingTop="3dp"
+                android:text="Sign Up"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp">
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
