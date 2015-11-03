@@ -73,6 +73,7 @@ public class AuthenticationActivity extends ActionBarActivity {
                             Intent i = new Intent(getBaseContext(), MainActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i);
+                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
                         }
                     }
@@ -95,6 +96,7 @@ public class AuthenticationActivity extends ActionBarActivity {
                         Intent i = new Intent(getBaseContext(), MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
+                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
 
                     }
@@ -105,9 +107,9 @@ public class AuthenticationActivity extends ActionBarActivity {
 
                 @Override
                 public void onClick(View view) {
-                    //Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                    //startActivity(i);
-                    //overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                    Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 }
             });
 
