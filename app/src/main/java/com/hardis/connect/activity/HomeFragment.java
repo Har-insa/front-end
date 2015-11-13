@@ -75,11 +75,11 @@ public class HomeFragment extends Fragment {
             public CharSequence getPageTitle(int position) {
                 switch (position) {
                     case 0:
-                        return getResources().getString(R.string.divertissement);
+                        return getResources().getString(R.string.covoiturage);
                     case 1:
-                        return getResources().getString(R.string.sports);
+                        return getResources().getString(R.string.evenement);
                     case 2:
-                        return getResources().getString(R.string.technologie);
+                        return getResources().getString(R.string.hardis_life);
                     default:
                         return "Page " + position;
                 }
@@ -101,18 +101,20 @@ public class HomeFragment extends Fragment {
 
                     switch (position) {
                         case 0:
+                            imageUrl = "http://www.cetab.org/sites/www.cetab.org/files/icone_covoiturage_bleu007db0_500x394.png";
+                            color = getResources().getColor(R.color.cyan);
+                            newDrawable = getResources().getDrawable(R.drawable.car);
+                            break;
+
+                        case 1:
                             imageUrl = "http://www.skyscanner.fr/sites/default/files/image_import/fr/micro.jpg";
                             color = getResources().getColor(R.color.purple);
-                            newDrawable = getResources().getDrawable(R.drawable.ticket);
+                            newDrawable = getResources().getDrawable(R.drawable.event);
                             break;
-                        case 1:
-                            imageUrl = "http://www.larousse.fr/encyclopedie/data/images/1311904-Balle_de_tennis_et_filet.jpg";
-                            color = getResources().getColor(R.color.orange);
-                            newDrawable = getResources().getDrawable(R.drawable.tennis);
-                            break;
+
                         case 2:
                             imageUrl = "http://soocurious.com/fr/wp-content/uploads/2014/03/8-facettes-de-notre-cerveau-qui-ont-evolue-avec-la-technologie8.jpg";
-                            color = getResources().getColor(R.color.cyan);
+                            color = getResources().getColor(R.color.orange);
                             newDrawable = getResources().getDrawable(R.drawable.light);
                             break;
                     }
