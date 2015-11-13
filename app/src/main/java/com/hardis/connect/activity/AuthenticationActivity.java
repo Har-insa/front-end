@@ -14,45 +14,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.hardis.connect.R;
-import com.hardis.connect.network.CustomRequest;
-import com.hardis.connect.util.AllUrls;
-import com.hardis.connect.util.AuthUtil;
+import com.hardis.connect.controller.UserController;
+import com.hardis.connect.controller.VolleyCallBack;
+import com.hardis.connect.model.User;
 import com.hardis.connect.util.GlobalMethodes;
 import com.hardis.connect.util.MessageUser;
 
-import org.json.JSONObject;
 
 
 public class AuthenticationActivity extends ActionBarActivity {
 
-    private Button login;
-    private Button register;
+    private Button signIn;
+    private Button signUp;
     private EditText username;
     private EditText password;
     private TextView textViewHardisConnect;
-    private String action="";
-    private RequestQueue requestQueue;
-    String logIn;
+    String login;
     String hashedPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        MessageUser.init();
 
         try {
             super.onCreate(savedInstanceState);
 
             setContentView(R.layout.activity_authentication);
 
-            login = (Button) findViewById(R.id.buttonLogin);
-            register = (Button) findViewById(R.id.buttonRegister);
+            signIn = (Button) findViewById(R.id.buttonLogin);
+            signUp = (Button) findViewById(R.id.buttonRegister);
             username = (EditText) findViewById(R.id.editTextId);
             password = (EditText) findViewById(R.id.editTextPassword);
             textViewHardisConnect = (TextView) findViewById(R.id.textViewHardisConnect);
@@ -62,18 +52,29 @@ public class AuthenticationActivity extends ActionBarActivity {
             password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                        logIn= username.getText().toString();
-                        String pass = password.getText().toString();
-                        if (logIn.isEmpty() || pass.isEmpty())
+                        login= username.getText().toString();
+                        String pwd = password.getText().toString();
+                        if (login.isEmpty() || pwd.isEmpty())
                             Toast.makeText(AuthenticationActivity.this, MessageUser.get("1105"), Toast.LENGTH_SHORT).show();
                         else {
-                            action = "login";
-                            hashedPass = GlobalMethodes.md5(pass);
+                            hashedPass = GlobalMethodes.md5(pwd);
+                            User user = new User(login,hashedPass);
 
-                            Intent i = new Intent(getBaseContext(), MainActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(i);
-                            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                            UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    Toast.makeText(AuthenticationActivity.this, MessageUser.get("2102"), Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(getBaseContext(), MainActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                                }
+
+                                @Override
+                                public void onFailed(String result) {
+                                    Toast.makeText(AuthenticationActivity.this, MessageUser.get("1103"), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }
                     }
@@ -81,29 +82,38 @@ public class AuthenticationActivity extends ActionBarActivity {
                 }
             });
 
-            login.setOnClickListener(new View.OnClickListener() {
+            signIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    logIn = username.getText().toString();
+                    login = username.getText().toString();
                     String pwd = password.getText().toString();
-                    if (logIn.isEmpty() || pwd.isEmpty())
+                    if (login.isEmpty() || pwd.isEmpty())
                         Toast.makeText(AuthenticationActivity.this, MessageUser.get("1105"), Toast.LENGTH_SHORT).show();
                     else {
-                        action = "login";
                         hashedPass = GlobalMethodes.md5(pwd);
+                        User user = new User(login,hashedPass);
 
-                        Intent i = new Intent(getBaseContext(), MainActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(i);
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                        UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Toast.makeText(AuthenticationActivity.this, MessageUser.get("2102"), Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getBaseContext(), MainActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                            }
 
-
+                            @Override
+                            public void onFailed(String result) {
+                                Toast.makeText(AuthenticationActivity.this, MessageUser.get("1103"), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             });
 
-            register.setOnClickListener(new View.OnClickListener() {
+            signUp.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
@@ -121,6 +131,8 @@ public class AuthenticationActivity extends ActionBarActivity {
 
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

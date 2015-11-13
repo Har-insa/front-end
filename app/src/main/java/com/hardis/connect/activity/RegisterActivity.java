@@ -8,14 +8,20 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import com.hardis.connect.R;
+import com.hardis.connect.controller.AgencyController;
+import com.hardis.connect.controller.UserController;
+import com.hardis.connect.controller.VolleyCallBack;
+import com.hardis.connect.model.User;
 import com.hardis.connect.util.AllUrls;
 import com.hardis.connect.util.GlobalMethodes;
 import com.hardis.connect.util.MessageUser;
@@ -38,6 +44,7 @@ public class RegisterActivity extends ActionBarActivity{
     private EditText phonenumberField;
     private CheckBox termAcceptation;
     private ProgressDialog progressDialog;
+    private Spinner agencies;
 
 
     private String username;
@@ -47,7 +54,7 @@ public class RegisterActivity extends ActionBarActivity{
     private String lastname;
     private String phonenumber;
 
-    private String action = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,12 @@ public class RegisterActivity extends ActionBarActivity{
         lastnameField = (EditText) findViewById(R.id.nom);
         phonenumberField = (EditText) findViewById(R.id.phonenumber);
         termAcceptation = (CheckBox) findViewById(R.id.terms);
+        agencies = (Spinner) findViewById(R.id.agency);
+        String[] lRegion= AgencyController.getAgencies(getApplicationContext());
+
+        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,lRegion);
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        agencies.setAdapter(dataAdapterR);
 
         textView.setText(Html.fromHtml("<font color=#3399cc>Sign</font> <font color=#ffffff>Up</font>"));
 
@@ -87,19 +100,20 @@ public class RegisterActivity extends ActionBarActivity{
                 else if (!termAcceptation.isChecked())
                     Toast.makeText(RegisterActivity.this, MessageUser.get("1108"), Toast.LENGTH_SHORT).show();
                 else {
-                    try {
-                        action = "register";
-                        String encodedFirstName = URLEncoder.encode(firstname, "utf-8").replace("+", "%20");
-                        String encodedLastName = URLEncoder.encode(lastname, "utf-8").replace("+", "%20");
-                        String hashedPassWord = GlobalMethodes.md5(password);
+                    UserController.addUser(getApplicationContext(), new User(firstname, lastname, username, GlobalMethodes.md5(password)),
+                            new VolleyCallBack() {
+                                @Override
+                                public void onSuccess(String result) {
+                                    Toast.makeText(getApplicationContext(), MessageUser.get("2101"), Toast.LENGTH_SHORT).show();
+                                }
 
-                        //Downloader downloader = new Downloader(RegisterActivity.this, RegisterActivity.this);
-                        //downloader.execute(AllUrls.register_user_url + username + "/" + hashedPassWord + "/" + encodedFirstName + "/" + encodedLastName + "/" + phonenumber);
-                    } catch (UnsupportedEncodingException e) {
-                        Toast.makeText(RegisterActivity.this, MessageUser.get("0000"),Toast.LENGTH_SHORT).show();
-                    }
-
+                                @Override
+                                public void onFailed(String result) {
+                                    Toast.makeText(getApplicationContext(), MessageUser.get("1104"), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
+
             }
         });
 
