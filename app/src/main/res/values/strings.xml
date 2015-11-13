@@ -5,9 +5,9 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-<string name="sports">Co-voiturage</string>
-<string name="divertissement">Evenemnt</string>
-<string name="technologie">Hardis life</string>
+<string name="covoiturage">Covoiturage</string>
+<string name="evenement">Evenemnt</string>
+<string name="hardis_life">Hardis life</string>
 
 
     <string name="nav_item_home">Accueil</string>
