@@ -38,6 +38,8 @@ public class MessageUser {
         EnglishMessages.put("1211","No demand from this user");
 
         EnglishMessages.put("2101","Your registration was successuful");
+        EnglishMessages.put("2102","Your authentification was successful");
+
 
         EnglishMessages.put("2201","Your demand has been sent");
         EnglishMessages.put("2202","The group has been successfully created");
