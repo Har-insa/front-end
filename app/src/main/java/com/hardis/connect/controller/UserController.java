@@ -30,7 +30,7 @@ public class UserController {
     public static void addUser(final Context context,final User user,final VolleyCallBack callBack) {
         JsonObjectRequest request = null;
         try {
-            JSONObject jsonBody = new JSONObject("{\"FirstName\":\""+user.getFirstName()+"\",\"LastName\":\""+user.getLastname()+"\",\"Email\":\""+user.getEmail()+"\",\"Password\":\""+user.getPassword()+"\",\"Agency\":{\"Id\":\"1\"}}");
+            JSONObject jsonBody = new JSONObject("{\"FirstName\":\""+user.getFirstName()+"\",\"LastName\":\""+user.getLastname()+"\",\"Email\":\""+user.getEmail()+"\",\"Password\":\""+user.getPassword()+"\",\"Agency\":{\"Id\":\""+user.getAgencyId()+"\"}}");
 
             request = new JsonObjectRequest(Request.Method.POST, AllUrls.add_user_url, jsonBody,
                     new Response.Listener<JSONObject>() {

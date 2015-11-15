@@ -16,24 +16,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by a on 12/11/2015.
  */
 public class  AgencyController {
 
 
-    public static String[] getAgencies(Context context) {
-        final String [] agencies = new String[5];
+    public static List<String> getAgencies(Context context) {
+        final List<String> agencies = new ArrayList<String>();
         StringRequest request = new StringRequest(Request.Method.GET, AllUrls.get_agencies_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.v("maha",response.toString());
                             JSONArray data = new JSONArray(response);
                             for(int i=0;i<data.length();i++) {
                                 String name = data.getJSONObject(i).getString("Name");
-                                agencies[i] = name;
+                                agencies.add(name);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

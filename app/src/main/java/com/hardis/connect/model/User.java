@@ -8,12 +8,14 @@ public class User {
     private String lastname;
     private String email;
     private String password;
+    private int agencyId;
 
-    public User(String firstName, String lastname, String email, String password) {
+    public User(String firstName, String lastname, String email, String password,int agencyId) {
         this.firstName = firstName;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
+        this.agencyId = agencyId;
     }
 
     public User(String email, String password) {
@@ -35,5 +37,9 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public int getAgencyId() {
+        return agencyId;
     }
 }

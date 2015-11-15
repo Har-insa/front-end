@@ -8,6 +8,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
+
 import com.hardis.connect.R;
 import com.hardis.connect.controller.AgencyController;
 import com.hardis.connect.controller.UserController;
@@ -71,9 +74,9 @@ public class RegisterActivity extends ActionBarActivity{
         phonenumberField = (EditText) findViewById(R.id.phonenumber);
         termAcceptation = (CheckBox) findViewById(R.id.terms);
         agencies = (Spinner) findViewById(R.id.agency);
-        String[] lRegion= AgencyController.getAgencies(getApplicationContext());
+        List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
 
-        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,lRegion);
+        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         agencies.setAdapter(dataAdapterR);
 
@@ -100,7 +103,7 @@ public class RegisterActivity extends ActionBarActivity{
                 else if (!termAcceptation.isChecked())
                     Toast.makeText(RegisterActivity.this, MessageUser.get("1108"), Toast.LENGTH_SHORT).show();
                 else {
-                    UserController.addUser(getApplicationContext(), new User(firstname, lastname, username, GlobalMethodes.md5(password)),
+                    UserController.addUser(getApplicationContext(), new User(firstname, lastname, username, GlobalMethodes.md5(password), 1),
                             new VolleyCallBack() {
                                 @Override
                                 public void onSuccess(String result) {
