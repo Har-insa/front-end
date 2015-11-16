@@ -25,6 +25,7 @@
                 android:id="@+id/textViewHardisConnect"
                 android:layout_alignParentTop="true"
                 android:textColor="@color/blue"
+                android:singleLine="true"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"

@@ -44,7 +44,6 @@ public class RegisterActivity extends ActionBarActivity{
     private EditText confirmpasswordField;
     private EditText firstnameField;
     private EditText lastnameField;
-    private EditText phonenumberField;
     private CheckBox termAcceptation;
     private ProgressDialog progressDialog;
     private Spinner agencies;
@@ -55,7 +54,6 @@ public class RegisterActivity extends ActionBarActivity{
     private String confirmpassword;
     private String firstname;
     private String lastname;
-    private String phonenumber;
 
 
 
@@ -71,14 +69,15 @@ public class RegisterActivity extends ActionBarActivity{
         confirmpasswordField = (EditText) findViewById(R.id.confirmpassword);
         firstnameField = (EditText) findViewById(R.id.prenom);
         lastnameField = (EditText) findViewById(R.id.nom);
-        phonenumberField = (EditText) findViewById(R.id.phonenumber);
         termAcceptation = (CheckBox) findViewById(R.id.terms);
         agencies = (Spinner) findViewById(R.id.agency);
         List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
 
         ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        agencies.setSelection(0);
         agencies.setAdapter(dataAdapterR);
+
 
         textView.setText(Html.fromHtml("<font color=#3399cc>Sign</font> <font color=#ffffff>Up</font>"));
 
@@ -94,7 +93,7 @@ public class RegisterActivity extends ActionBarActivity{
                 confirmpassword = confirmpasswordField.getText().toString();
                 firstname = firstnameField.getText().toString();
                 lastname = lastnameField.getText().toString();
-                phonenumber = phonenumberField.getText().toString();
+
 
                 if (username.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || firstname.isEmpty() || lastname.isEmpty())
                     Toast.makeText(RegisterActivity.this, MessageUser.get("1106"), Toast.LENGTH_SHORT).show();

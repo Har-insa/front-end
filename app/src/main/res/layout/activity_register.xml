@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:weightSum="200"
-        android:layout_weight="25"
+        android:layout_weight="17"
         android:gravity="center">
 
         <TextView
@@ -34,7 +34,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="80"
+        android:layout_weight="83"
         android:padding="20dp">
 
 
@@ -116,26 +116,17 @@
                         android:textColorHint="@color/hardis"
                         android:ems="10"
                         android:singleLine="true"
-                        android:hint="ConfirmPassword"
+                        android:hint="Confirm Password"
                         android:inputType="textPassword"
                         android:layout_margin="5dp" />
 
-                    <EditText
-                        android:id="@+id/phonenumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:ems="10"
-                        android:singleLine="true"
-                        android:textColorHint="@color/hardis"
-                        android:hint="Phone number"
-                        android:inputType="number"
-                        android:digits="1234567890"/>
+
 
                     <Spinner
                         android:id="@+id/agency"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColorHint="@color/hardis"
                         />
 
                     <CheckBox
