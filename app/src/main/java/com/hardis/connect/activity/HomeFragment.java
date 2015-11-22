@@ -22,6 +22,7 @@ import android.widget.ImageView;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.hardis.connect.R;
+import com.hardis.connect.fragment.CovoiturageFeedsFragment;
 import com.hardis.connect.fragment.FeedsFragment;
 
 
@@ -62,7 +63,11 @@ public class HomeFragment extends Fragment {
             @Override
             public Fragment getItem(int position) {
                 //je créé pour chaque onglet un FeedsFragment
-                return FeedsFragment.newInstance();
+                switch(position){
+                    case 0 : return CovoiturageFeedsFragment.newInstance();
+                    default : return FeedsFragment.newInstance();
+                }
+
             }
 
             @Override
