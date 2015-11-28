@@ -36,7 +36,6 @@ public class CovoiturageFeedsFragment extends Fragment {
 
 
         // preparing navigation drawer items
-        //1
         CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
             offreItem.setUserName("Hassan El Moutaraji");
             offreItem.setTimeStamp("1h");
@@ -88,7 +87,7 @@ public class CovoiturageFeedsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        return inflater.inflate(R.layout.covoiturage_search_recyclerview, container, false);
     }
 
     @Override

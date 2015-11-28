@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -18,6 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.hardis.connect.R;
 import com.hardis.connect.fragment.FragmentDrawer;
 
@@ -38,12 +42,36 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
+        //handle the FAB
+        FloatingActionButton FAB = (FloatingActionButton) findViewById(R.id.fab);
+
+        FAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOptions();
+            }
+        });
         // display the first navigation drawer view on app launch
         displayView(0);
 
     }
 
 
+    private void showOptions(){
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        CharSequence items[] = new CharSequence[] {"Offre de covoiturage", "Evenement", "Post"};
+        adb.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface d, int n) {
+                // ...
+            }
+
+        });
+        adb.setNegativeButton("Annuler", null);
+        adb.setTitle("Créer un :");
+        adb.show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //* Inflate the menu; this adds items to the action bar if it is present.

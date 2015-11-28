@@ -95,53 +95,6 @@ public class FragmentDrawer extends Fragment {
         accountIcon =  (ImageButton) layout.findViewById(R.id.imageView);
         textViewLogIn = (TextView) layout.findViewById(R.id.user_name_label);
 
-        accountIcon.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-
-                        textViewLogIn.setTextColor(getResources().getColor(R.color.hardis));
-                        // PRESSED
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_UP:
-
-                        textViewLogIn.setTextColor(getResources().getColor(R.color.drawerArrowColor));
-
-                        //f (userSession.getState().equals(Session.SESSION_NONE)) {
-                            //mDrawerLayout.closeDrawer(containerView);
-                            //shwoLogInPopUp();
-                        //}
-
-                        return true; // if you want to handle the touch event
-                }
-
-                return false;
-            }
-        });
-        barcode.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-
-                        textViewLogIn.setTextColor(getResources().getColor(R.color.hardis));
-                        // PRESSED
-                        return true; // if you want to handle the touch event
-                    case MotionEvent.ACTION_UP:
-
-                        textViewLogIn.setTextColor(getResources().getColor(R.color.drawerArrowColor));
-                        return true; // if you want to handle the touch event
-                }
-
-                return false;
-            }
-        });
-
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

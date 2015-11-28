@@ -15,7 +15,7 @@
     <string name="nav_item_commander">Cinéma</string>
     <string name="nav_item_carte">Musique</string>
     <string name="nav_item_liste">Sport</string>
-    <string name="nav_item_a_proximite">Autres</string>
+    <string name="nav_item_a_proximite">Restaurant</string>
     <string name="nav_item_services">Services</string>
     <string name="nav_item_cinema">Co-voiturage</string>
     <string name="nav_item_actualites">Gestion de frais</string>
