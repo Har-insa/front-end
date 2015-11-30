@@ -28,6 +28,7 @@ dependencies {
     compile 'com.jpardogo.materialtabstrip:library:1.0.0'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.getbase:floatingactionbutton:1.9.0'
+    compile 'com.github.clans:fab:1.6.2'
     compile ('com.github.florent37:materialviewpager:1.0.3.2@aar'){
         transitive = true
     }

@@ -31,6 +31,7 @@
             android:layout_height="wrap_content">
 
         </RelativeLayout>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -38,16 +39,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_icon="@mipmap/ic_library_add_white_24dp"
-            fab:fab_colorNormal="@color/hardis"
-            fab:fab_colorPressed="@color/blue"
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            fab:menu_colorNormal="@color/hardis"
+            fab:menu_colorPressed="@color/cyan"
+            fab:menu_labels_ellipsize="end"
+            fab:menu_labels_singleLine="true"
+            fab:menu_backgroundColor="#ccffffff">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_library_add_white_24dp"
+                fab:fab_colorNormal="@color/cyan"
+                fab:fab_colorPressed="@color/hardis"
+                fab:fab_size="mini"
+                fab:fab_label="Offre de covoiturage" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_library_add_white_24dp"
+                fab:fab_colorNormal="@color/cyan"
+                fab:fab_colorPressed="@color/hardis"
+                fab:fab_size="mini"
+                fab:fab_label="Evenement" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_library_add_white_24dp"
+                fab:fab_colorNormal="@color/cyan"
+                fab:fab_colorPressed="@color/hardis"
+                fab:fab_size="mini"
+                fab:fab_label="Post" />
+
+        </com.github.clans.fab.FloatingActionMenu>
 
 
     </RelativeLayout>

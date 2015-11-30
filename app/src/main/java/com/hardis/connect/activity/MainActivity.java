@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -21,7 +22,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,7 +29,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.hardis.connect.R;
 import com.hardis.connect.controller.AgencyController;
 import com.hardis.connect.controller.CovoiturageController;
@@ -38,11 +39,18 @@ import com.hardis.connect.fragment.FragmentDrawer;
 import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.util.MessageUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener{
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
-
+    private FloatingActionButton fab1;
+    private FloatingActionButton fab2;
+    private FloatingActionButton fab3;
+    private List<FloatingActionMenu> menus = new ArrayList<>();
+    private Handler mUiHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,22 +62,65 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         drawerFragment = (FragmentDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+//handle the FAB : Menu + buttons
+        final FloatingActionMenu menu1 = (FloatingActionMenu) findViewById(R.id.menu1);
 
-        //handle the FAB
-        FloatingActionButton FAB = (FloatingActionButton) findViewById(R.id.fab);
-
-        FAB.setOnClickListener(new View.OnClickListener() {
+        menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showOptions();
-                createNewOffer();
-
+                menu1.toggle(true);
             }
         });
+        menus.add(menu1);
+        menu1.hideMenuButton(false);
+
+        int delay = 400;
+        for (final FloatingActionMenu menu : menus) {
+            mUiHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    menu.showMenuButton(true);
+                }
+            }, delay);
+            delay += 150;
+        }
+
+        menu1.setClosedOnTouchOutside(true);
+
+//buttons
+        fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+
+        fab1.setOnClickListener(clickListener);
+        fab2.setOnClickListener(clickListener);
+        fab3.setOnClickListener(clickListener);
+
         // display the first navigation drawer view on app launch
         displayView(0);
 
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String text = "";
+
+            switch (v.getId()) {
+                case R.id.fab1:
+                    createNewOffer();
+                    break;
+                case R.id.fab2:
+                    text = fab2.getLabelText();
+                    break;
+                case R.id.fab3:
+                    text = fab3.getLabelText();
+                    break;
+            }
+
+            Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private void createNewOffer() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -133,23 +184,6 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     }
 
-
-    private void showOptions(){
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        CharSequence items[] = new CharSequence[] {"Offre de covoiturage", "Evenement", "Post"};
-        adb.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface d, int n) {
-                // ...
-            }
-
-        });
-        adb.setNegativeButton("Annuler", null);
-        adb.setPositiveButton("Confirmer", null);
-        adb.setTitle("Créer un :");
-        adb.show();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //* Inflate the menu; this adds items to the action bar if it is present.
