@@ -58,7 +58,7 @@ public class UserController {
         {
 
         }
-    RequestController.getInstance(context).addToRequestQueue(request);
+        RequestController.getInstance(context).addToRequestQueue(request);
     }
 
    public static void authenticateUser(Context context,final User user, final VolleyCallBack callBack) {

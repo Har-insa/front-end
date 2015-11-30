@@ -177,6 +177,62 @@ public class CovoiturageController {
         return covoiturages;
     }
 
+    public static void testAddTravel(Context context, final VolleyCallBack callBack) {
+        JsonObjectRequest request = null;
+        try {
+            JSONObject jsonObj = new JSONObject();
+            JSONObject publication = new JSONObject();
+            JSONObject group = new JSONObject();
+            JSONObject category = new JSONObject();
+            JSONObject depart = new JSONObject();
+            JSONObject arrival = new JSONObject();
+            group.put("Id",1);
+            category.put("Id",1);
+            publication.put("Group",group);
+            publication.put("Category",category);
+            publication.put("Title","Test Title JSON Nested");
+            publication.put("Description","Test description");
+            jsonObj.put("Publication",publication);
+            jsonObj.put("Capacity",9);
+            depart.put("Id",1);
+            arrival.put("Id",1);
+            jsonObj.put("DepartureAgency",depart);
+            jsonObj.put("ArrivalAgency",arrival);
+            jsonObj.put("DepartureTime","2015-12-06T12:30:00");
+            jsonObj.put("ArrivalTime","2015-12-07T15:30:00");
+
+
+            request = new JsonObjectRequest(Request.Method.POST, "http://connext2.azurewebsites.net/api/travels/", jsonObj,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            callBack.onSuccess("success");
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyLog.d("Response", error.getMessage());
+                            callBack.onFailed("failed");
+                        }
+                    }
+
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    return params;
+                }
+            };
+        }
+        catch(JSONException e)
+        {
+
+        }
+        RequestController.getInstance(context).addToRequestQueue(request);
+    }
+
     public static List<Covoiturage> getCovoiturages() {
         return covoiturages;
     }
