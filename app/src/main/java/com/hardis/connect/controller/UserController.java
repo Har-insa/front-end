@@ -1,6 +1,7 @@
 package com.hardis.connect.controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,6 +38,10 @@ public class UserController {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.v("token", response.toString());
+                            SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("token", response.toString());
+                            editor.commit();
                             callBack.onSuccess("success");
                         }
                     },

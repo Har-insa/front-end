@@ -17,13 +17,26 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.hardis.connect.R;
+import com.hardis.connect.controller.AgencyController;
+import com.hardis.connect.controller.CovoiturageController;
+import com.hardis.connect.controller.VolleyCallBack;
 import com.hardis.connect.fragment.FragmentDrawer;
+import com.hardis.connect.model.Covoiturage;
+import com.hardis.connect.util.MessageUser;
 
 
 public class MainActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener{
@@ -48,11 +61,75 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showOptions();
+                //showOptions();
+                createNewOffer();
+
             }
         });
         // display the first navigation drawer view on app launch
         displayView(0);
+
+    }
+
+    private void createNewOffer() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        View view = getLayoutInflater().inflate(R.layout.offre_covoiturage, null);
+        final Spinner depart = (Spinner)view.findViewById(R.id.depart);
+        final Spinner destination = (Spinner)view.findViewById(R.id.destination);
+        Button create = (Button)view.findViewById(R.id.create);
+        final DatePicker datePicker = (DatePicker)view.findViewById(R.id.datePicker);
+        final TimePicker timePicker = (TimePicker)view.findViewById(R.id.timePicker);
+
+        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, AgencyController.getAgencies(getApplicationContext()));
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        depart.setAdapter(dataAdapterR);
+        destination.setAdapter(dataAdapterR);
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int departureAgencyId = AgencyController.getAgencyByName(depart.getSelectedItemPosition());
+                int destinationAgencyId = AgencyController.getAgencyByName(destination.getSelectedItemPosition());
+
+                int year = datePicker.getYear();
+                int month = datePicker.getMonth();
+                int day = datePicker.getDayOfMonth();
+                int hour = timePicker.getCurrentHour();
+                int minute = timePicker.getCurrentMinute();
+
+                String departureDate = String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day) + "T"
+                        + String.valueOf(hour) + ":" + String.valueOf(minute) + ":00";
+
+                Log.v("departuredate", departureDate);
+
+                if (departureAgencyId == -1 || destinationAgencyId == -1) {
+                    Toast.makeText(MainActivity.this, MessageUser.get("1106"), Toast.LENGTH_SHORT).show();
+                } else {
+                    Covoiturage covoiturage = new Covoiturage();
+                    covoiturage.setDepartureAgency(departureAgencyId);
+                    covoiturage.setArrivalAgency(destinationAgencyId);
+                    covoiturage.setDepartureTime(departureDate);
+                    CovoiturageController.createCovoiturage(covoiturage, getApplicationContext(), new VolleyCallBack() {
+                        @Override
+                        public void onSuccess(String result) {
+
+                            Log.v("create", "succ");
+                        }
+
+                        @Override
+                        public void onFailed(String result) {
+                            Log.v("create", "failed");
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+        dialog.setView(view).create();
+        dialog.show();
 
     }
 
@@ -69,6 +146,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         });
         adb.setNegativeButton("Annuler", null);
+        adb.setPositiveButton("Confirmer", null);
         adb.setTitle("Créer un :");
         adb.show();
     }

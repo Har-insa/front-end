@@ -71,7 +71,7 @@ public class RegisterActivity extends ActionBarActivity{
         lastnameField = (EditText) findViewById(R.id.nom);
         termAcceptation = (CheckBox) findViewById(R.id.terms);
         agencies = (Spinner) findViewById(R.id.agency);
-        List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
+        final List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
 
         ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,19 +94,25 @@ public class RegisterActivity extends ActionBarActivity{
                 firstname = firstnameField.getText().toString();
                 lastname = lastnameField.getText().toString();
 
+                int agencyId= AgencyController.getAgencyByName(agencies.getSelectedItemPosition());
 
-                if (username.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || firstname.isEmpty() || lastname.isEmpty())
+                if (username.isEmpty() || password.isEmpty() || confirmpassword.isEmpty() || firstname.isEmpty() || lastname.isEmpty() || agencyId ==-1)
                     Toast.makeText(RegisterActivity.this, MessageUser.get("1106"), Toast.LENGTH_SHORT).show();
                 else if (!password.equals(confirmpassword))
                     Toast.makeText(RegisterActivity.this, MessageUser.get("1107"), Toast.LENGTH_SHORT).show();
                 else if (!termAcceptation.isChecked())
                     Toast.makeText(RegisterActivity.this, MessageUser.get("1108"), Toast.LENGTH_SHORT).show();
                 else {
-                    UserController.addUser(getApplicationContext(), new User(firstname, lastname, username, GlobalMethodes.md5(password), 1),
+
+                    UserController.addUser(getApplicationContext(), new User(firstname, lastname, username, GlobalMethodes.md5(password), agencyId),
                             new VolleyCallBack() {
                                 @Override
                                 public void onSuccess(String result) {
                                     Toast.makeText(getApplicationContext(), MessageUser.get("2101"), Toast.LENGTH_SHORT).show();
+                                    Intent i = new Intent(getBaseContext(), AuthenticationActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                    overridePendingTransition(R.anim.right_in, R.anim.left_out);
                                 }
 
                                 @Override
@@ -131,6 +137,9 @@ public class RegisterActivity extends ActionBarActivity{
 
             }
         });
+
+
+
     }
 
 

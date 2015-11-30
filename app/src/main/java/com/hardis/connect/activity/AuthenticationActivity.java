@@ -94,7 +94,7 @@ public class AuthenticationActivity extends ActionBarActivity {
                         hashedPass = GlobalMethodes.md5(pwd);
                         User user = new User(login,hashedPass);
 
-                        UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
+                         UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
                             @Override
                             public void onSuccess(String result) {
                                 Toast.makeText(AuthenticationActivity.this, MessageUser.get("2102"), Toast.LENGTH_SHORT).show();

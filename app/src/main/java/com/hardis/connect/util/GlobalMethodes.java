@@ -3,6 +3,8 @@ package com.hardis.connect.util;
 /**
  * Created by Hassan El Moutaraji on 25/08/2015.
  */
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -49,6 +51,5 @@ public class GlobalMethodes {
         }
         return "";
     }
-
 
 }

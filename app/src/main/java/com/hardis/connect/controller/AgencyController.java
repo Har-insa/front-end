@@ -24,6 +24,7 @@ import java.util.List;
  */
 public class  AgencyController {
 
+    private static List<Integer> agenciesId=new ArrayList<>();
 
     public static List<String> getAgencies(Context context) {
         final List<String> agencies = new ArrayList<String>();
@@ -36,7 +37,10 @@ public class  AgencyController {
                             JSONArray data = new JSONArray(response);
                             for(int i=0;i<data.length();i++) {
                                 String name = data.getJSONObject(i).getString("Name");
+                                int id= data.getJSONObject(i).getInt("Id");
+                                Log.v("id",String.valueOf(id));
                                 agencies.add(name);
+                                agenciesId.add(id);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -52,5 +56,11 @@ public class  AgencyController {
 
         RequestController.getInstance(context).addToRequestQueue(request);
         return agencies;
+    }
+
+    public static  int getAgencyByName(int pos) {
+        if(pos>=1)
+       return agenciesId.get(pos-1);
+        else return -1;
     }
 }

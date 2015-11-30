@@ -1,11 +1,13 @@
 package com.hardis.connect.fragment;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,13 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 import com.hardis.connect.R;
 import com.hardis.connect.adapter.CovoiturageFeedsFragmentAdapter;
 import com.hardis.connect.adapter.FeedsFragmentAdapter;
+import com.hardis.connect.controller.CovoiturageController;
+import com.hardis.connect.controller.VolleyCallBack;
+import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.model.CovoiturageOffreItem;
 import com.hardis.connect.model.NavDrawerItem;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +37,31 @@ public class CovoiturageFeedsFragment extends Fragment {
         return new CovoiturageFeedsFragment();
     }
 
-    public static List<CovoiturageOffreItem> getData() {
-        List<CovoiturageOffreItem> data = new ArrayList<>();
+    public static List<CovoiturageOffreItem> getData(Context context) {
+        final List<CovoiturageOffreItem> data = new ArrayList<>();
+
+        CovoiturageController.getOffresCovoiturage(context, new VolleyCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                List<Covoiturage> covoiturages = CovoiturageController.getCovoiturages();
+                for(int i=0;i<covoiturages.size();i++) {
+                    CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
+                    offreItem.setUserName(covoiturages.get(i).getUserName());
+                    offreItem.setTimeStamp("1h");
+                    offreItem.setTrajet(covoiturages.get(i).getDepartureAgencyName() + " >> " + covoiturages.get(i).getArrivalAgencyName());
+                    offreItem.setDate(covoiturages.get(i).getDepartureTime());
+                    offreItem.setCapacite(covoiturages.get(i).getCapacite() + " place(s) disponible(s)");
+                    offreItem.setImgResID(R.drawable.col4);
+                    data.add(offreItem);
+                }
+            }
+
+            @Override
+            public void onFailed(String result) {
+
+            }
+        });
+
 
 
         // preparing navigation drawer items
@@ -102,7 +131,7 @@ public class CovoiturageFeedsFragment extends Fragment {
 
 
         //penser à passer notre Adapter (ici : FeedsFragmentAdapter) à un RecyclerViewMaterialAdapter
-        mAdapter = new RecyclerViewMaterialAdapter(new CovoiturageFeedsFragmentAdapter(getData()));
+        mAdapter = new RecyclerViewMaterialAdapter(new CovoiturageFeedsFragmentAdapter(getData(getActivity().getApplicationContext())));
         mRecyclerView.setAdapter(mAdapter);
 
         //notifier le MaterialViewPager qu'on va utiliser une RecyclerView
