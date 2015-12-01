@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     private FloatingActionButton fab1;
     private FloatingActionButton fab2;
     private FloatingActionButton fab3;
+    private FloatingActionMenu menu1;
     private List<FloatingActionMenu> menus = new ArrayList<>();
     private Handler mUiHandler = new Handler();
 
@@ -63,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 //handle the FAB : Menu + buttons
-        final FloatingActionMenu menu1 = (FloatingActionMenu) findViewById(R.id.menu1);
+        menu1 = (FloatingActionMenu) findViewById(R.id.menu1);
 
         menu1.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
@@ -109,16 +110,19 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
             switch (v.getId()) {
                 case R.id.fab1:
                     createNewOffer();
+                    menu1.close(true);
                     break;
                 case R.id.fab2:
                     text = fab2.getLabelText();
+                    Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.fab3:
                     text = fab3.getLabelText();
+                    Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
                     break;
             }
 
-            Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT).show();
+
         }
     };
 
