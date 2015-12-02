@@ -6,32 +6,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="102dp"
-        android:text="@string/lorem_ipsum"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp"
-        android:paddingLeft="60dp"
-        android:fontFamily="sans-serif-light"
-        android:background="#455A64"
-        android:elevation="4dp"/>
+        android:background="@color/hardis"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/feed_item_padding_left_right"
+        android:paddingRight="@dimen/feed_item_padding_left_right" >
 
+        <ImageView
+            android:id="@+id/profilePic"
+            android:layout_width="@dimen/feed_item_profile_pic_detail"
+            android:layout_height="@dimen/feed_item_profile_pic_detail"
+            android:layout_marginTop="7dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ibm">
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/feed_item_profile_info_padd" >
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="fill_parent"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:text="Maha Benabbou"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@android:color/white"
+                android:text="Lyon Paris avec Maha et ça c'est juste pour tester ce machin truc de "
+                android:textSize="19sp"
+                android:fontFamily="sans-serif-light"
+                />
+
+            <TextView
+                android:id="@+id/timeStamp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="2h"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-light"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+     <RelativeLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/header"
+         android:id="@+id/relativeLayout">
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/label_depart"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header"
+
         android:padding="16dp"
         android:textSize="18sp"
-        android:text="@string/lorem_ipsum_large"/>
+        android:text="Départ :"/>
 
+    <TextView
+        android:id="@+id/depart_value"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:text="Lyon"
+        android:layout_alignTop="@+id/label_depart"
+        android:layout_toRightOf="@+id/label_depart"
+        android:layout_toEndOf="@+id/label_depart" />
+
+    <TextView
+        android:id="@+id/arrive_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:text="Arrivée : "
+        android:layout_below="@+id/label_depart"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/arrive_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:text="Paris"
+        android:layout_alignTop="@+id/arrive_label"
+        android:layout_toRightOf="@+id/arrive_label"
+        android:layout_toEndOf="@+id/arrive_label" />
+    <TextView
+        android:id="@+id/date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:text="Date : "
+        android:layout_below="@+id/arrive_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/date_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:text="Lundi à 10h"
+        android:layout_below="@+id/arrive_label"
+        android:layout_toRightOf="@+id/arrive_label"
+        android:layout_toEndOf="@+id/arrive_label" />
+
+     </RelativeLayout>
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/menu_down"
+        android:id="@+id/menu_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -41,23 +145,52 @@
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:elevation="6dp"
+        fab:menu_colorNormal="@color/green"
+        fab:menu_colorPressed="@color/green_teal"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true"
         fab:menu_openDirection="down">
 
         <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_library_add_white_24dp"
+            android:src="@mipmap/ic_clear_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="Annuler" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/green"
+            fab:fab_colorPressed="@color/green_teal"
+            android:src="@mipmap/ic_done_white_24dp"
             fab:fab_size="mini"
             fab:fab_label="Réserver" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_library_add_white_24dp"
-            fab:fab_size="mini"
-            fab:fab_label="Recommander" />
 
     </com.github.clans.fab.FloatingActionMenu>
+
+    <TextView
+        android:id="@+id/dispo_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:text="Nombre de places disponible :"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+   android:id="@+id/dispo_value"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:padding="16dp"
+   android:textSize="18sp"
+   android:text="3"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_toRightOf="@+id/dispo_label"
+        android:layout_toEndOf="@+id/dispo_label" />
 </RelativeLayout>

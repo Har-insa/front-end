@@ -1,6 +1,7 @@
 package com.hardis.connect.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,13 +9,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.hardis.connect.R;
+import com.hardis.connect.activity.CovoiturageOfferDetailsActivity;
 import com.hardis.connect.adapter.CovoiturageFeedsFragmentAdapter;
 import com.hardis.connect.adapter.FeedsFragmentAdapter;
 import com.hardis.connect.controller.CovoiturageController;
@@ -44,7 +49,7 @@ public class CovoiturageFeedsFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 List<Covoiturage> covoiturages = CovoiturageController.getCovoiturages();
-                for(int i=0;i<covoiturages.size();i++) {
+                for (int i = 0; i < covoiturages.size(); i++) {
                     CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
                     offreItem.setUserName(covoiturages.get(i).getUserName());
                     offreItem.setTimeStamp("1h");
@@ -63,16 +68,15 @@ public class CovoiturageFeedsFragment extends Fragment {
         });
 
 
-
         // preparing navigation drawer items
         CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
-            offreItem.setUserName("Hassan El Moutaraji");
-            offreItem.setTimeStamp("1h");
-            offreItem.setTrajet("Lyon >> Paris");
-            offreItem.setDate("Demain à 10h");
-            offreItem.setCapacite("2 place(s) disponible(s)");
-            offreItem.setImgResID(R.drawable.col4);
-            data.add(offreItem);
+        offreItem.setUserName("Hassan El Moutaraji");
+        offreItem.setTimeStamp("1h");
+        offreItem.setTrajet("Lyon >> Paris");
+        offreItem.setDate("Demain à 10h");
+        offreItem.setCapacite("2 place(s) disponible(s)");
+        offreItem.setImgResID(R.drawable.col4);
+        data.add(offreItem);
 
         CovoiturageOffreItem offreItem2 = new CovoiturageOffreItem();
         offreItem2.setUserName("Maha Benannou");
@@ -129,6 +133,21 @@ public class CovoiturageFeedsFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                // Save the position and pass it as an argument to the bundle so you can retrive the details later
+                //   Bundle bundle = fragment.getArguments();
+                //   bundle.putInteger("position",position);
+                startActivity(new Intent(getActivity(), CovoiturageOfferDetailsActivity.class));
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                // ...
+            }
+        }));
 
         //penser à passer notre Adapter (ici : FeedsFragmentAdapter) à un RecyclerViewMaterialAdapter
         mAdapter = new RecyclerViewMaterialAdapter(new CovoiturageFeedsFragmentAdapter(getData(getActivity().getApplicationContext())));
@@ -137,4 +156,58 @@ public class CovoiturageFeedsFragment extends Fragment {
         //notifier le MaterialViewPager qu'on va utiliser une RecyclerView
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
+
+}
+
+class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener
+{
+    public static interface OnItemClickListener
+    {
+        public void onItemClick(View view, int position);
+        public void onItemLongClick(View view, int position);
+    }
+
+    private OnItemClickListener mListener;
+    private GestureDetector mGestureDetector;
+
+    public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener)
+    {
+        mListener = listener;
+
+        mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener()
+        {
+            @Override
+            public boolean onSingleTapUp(MotionEvent e)
+            {
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e)
+            {
+                View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+
+                if(childView != null && mListener != null)
+                {
+                    mListener.onItemLongClick(childView, recyclerView.getChildPosition(childView));
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e)
+    {
+        View childView = view.findChildViewUnder(e.getX(), e.getY());
+
+        if(childView != null && mListener != null && mGestureDetector.onTouchEvent(e))
+        {
+            mListener.onItemClick(childView, view.getChildPosition(childView));
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView view, MotionEvent motionEvent){}
 }
