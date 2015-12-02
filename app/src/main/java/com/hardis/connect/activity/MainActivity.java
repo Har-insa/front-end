@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -109,7 +110,8 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
             switch (v.getId()) {
                 case R.id.fab1:
-                    createNewOffer();
+                    //createNewOffer();
+                    startActivity(new Intent(MainActivity.this, CreateCovoiturageOfferActivity.class));
                     menu1.close(true);
                     break;
                 case R.id.fab2:

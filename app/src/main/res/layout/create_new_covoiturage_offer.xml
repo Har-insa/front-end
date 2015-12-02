@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="102dp"
+        android:background="@color/hardis"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/feed_item_padding_left_right"
+        android:paddingRight="@dimen/feed_item_padding_left_right" >
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/depart" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/destination" />
+
+    </LinearLayout>
+
+     <RelativeLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/header"
+         android:id="@+id/relativeLayout">
+
+
+
+         <EditText
+             android:id="@+id/date_depart"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textColorHint="@color/timestamp"
+             android:focusable="false"
+             android:textColor="#455A64"
+             android:ems="10"
+             android:padding="16dp"
+             android:textSize="18sp"
+             android:singleLine="true"
+             android:hint="Date de départ"
+             android:layout_margin="5dp" />
+
+         <EditText
+             android:id="@+id/heure_depart"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textColorHint="@color/timestamp"
+             android:focusable="false"
+             android:textColor="#455A64"
+             android:ems="10"
+             android:padding="16dp"
+             android:textSize="18sp"
+             android:singleLine="true"
+             android:layout_below="@+id/date_depart"
+             android:hint="Heure de départ"
+             android:layout_margin="5dp" />
+
+         <Spinner
+             android:layout_width="match_parent"
+             android:layout_height="40dp"
+             android:id="@+id/capacite"
+             android:layout_below="@+id/heure_depart"/>
+
+         <EditText
+             android:id="@+id/titre"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textColorHint="@color/timestamp"
+             android:textColor="#455A64"
+             android:lines="2"
+             android:ems="10"
+             android:padding="16dp"
+             android:textSize="18sp"
+             android:singleLine="true"
+             android:layout_below="@+id/capacite"
+             android:hint="Donner un titre ou laisser un message ..."
+             android:layout_margin="5dp" />
+
+     </RelativeLayout>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="54dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:elevation="6dp"
+        fab:menu_colorNormal="@color/green"
+        fab:menu_colorPressed="@color/green_teal"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_openDirection="down">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_clear_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="Annuler" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/green"
+            fab:fab_colorPressed="@color/green_teal"
+            android:src="@mipmap/ic_done_white_24dp"
+            fab:fab_size="mini"
+            fab:fab_label="Créer" />
+
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>
