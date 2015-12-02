@@ -14,16 +14,26 @@ package com.hardis.connect.activity;
     import android.os.Handler;
     import android.support.v7.app.ActionBarActivity;
     import android.support.v7.widget.Toolbar;
+    import android.text.format.Time;
+    import android.util.Log;
     import android.view.ContextThemeWrapper;
     import android.view.MenuItem;
     import android.view.View;
+    import android.widget.TextView;
     import android.widget.Toast;
 
     import com.github.clans.fab.FloatingActionButton;
     import com.github.clans.fab.FloatingActionMenu;
     import com.hardis.connect.R;
+    import com.hardis.connect.model.Covoiturage;
+    import com.hardis.connect.util.GlobalMethodes;
 
+    import org.w3c.dom.Text;
+
+    import java.text.ParseException;
+    import java.text.SimpleDateFormat;
     import java.util.ArrayList;
+    import java.util.Date;
     import java.util.List;
 
 
@@ -35,6 +45,14 @@ public class CovoiturageOfferDetailsActivity extends ActionBarActivity {
     private FloatingActionMenu menu_book;
     private List<FloatingActionMenu> menus = new ArrayList<>();
     private Handler mUiHandler = new Handler();
+
+    private TextView userName;
+    private TextView title;
+    private TextView departAgency;
+    private TextView arrivalAgency;
+    private TextView departDate;
+    private TextView capacite;
+    private TextView timeStamp;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +92,25 @@ public class CovoiturageOfferDetailsActivity extends ActionBarActivity {
             fab_book.setOnClickListener(clickListener);
             fab_cancel.setOnClickListener(clickListener);
 
+            userName = (TextView) findViewById(R.id.userName);
+            title = (TextView) findViewById(R.id.title);
+            timeStamp = (TextView) findViewById(R.id.timeStamp);
+            departAgency =(TextView) findViewById(R.id.depart_value);
+            arrivalAgency =(TextView) findViewById(R.id.arrive_value);
+            capacite = (TextView) findViewById(R.id.dispo_value);
+            departDate = (TextView) findViewById(R.id.date_value);
 
 
+            Bundle bundle = getIntent().getExtras();
+            if(bundle== null) return;
+            Covoiturage covoiturage = (Covoiturage) getIntent().getSerializableExtra("covoiturage");
+            userName.setText(covoiturage.getUserName());
+            title.setText("\""+covoiturage.getTitle()+"\"");
+            timeStamp.setText(covoiturage.getTimeStamp());
+            departAgency.setText(covoiturage.getDepartureAgencyName());
+            arrivalAgency.setText(covoiturage.getArrivalAgencyName());
+            capacite.setText(String.valueOf(covoiturage.getCapacite()));
+            departDate.setText(covoiturage.getDepartureTime().replace("T"," "));
 
         }
 
@@ -83,7 +118,7 @@ public class CovoiturageOfferDetailsActivity extends ActionBarActivity {
         private void createAndShowAlertDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Réservation");
-            builder.setMessage("Vous voullez réserver une place ?");
+            builder.setMessage("Voulez-vous réserver une place ?");
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     //TODO

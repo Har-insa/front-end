@@ -1,7 +1,7 @@
 package com.hardis.connect.model;
 
 
-public class CovoiturageOffreItem {
+public class CovoiturageOffreItem  {
     private String userName;
     int imgResID;
     private String timeStamp;

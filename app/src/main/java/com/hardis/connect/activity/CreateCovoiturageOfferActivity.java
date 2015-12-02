@@ -8,19 +8,27 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hardis.connect.R;
+import com.hardis.connect.controller.AgencyController;
+import com.hardis.connect.controller.CovoiturageController;
+import com.hardis.connect.model.Covoiturage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,14 +45,33 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
     private FloatingActionMenu menu_book;
     private List<FloatingActionMenu> menus = new ArrayList<>();
     private Handler mUiHandler = new Handler();
+    private Spinner depart;
+    private Spinner destination;
+    private Spinner capacite;
     private EditText dateDepart;
     private EditText heureDepart;
+    private EditText title;
     private Calendar myCalendar = Calendar.getInstance();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.create_new_covoiturage_offer);
+
+            final List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
+            List<Integer> capacites = new ArrayList<Integer>();
+            capacites.add(1);
+            capacites.add(2);
+            capacites.add(3);
+            capacites.add(4);
+            capacites.add(5);
+            capacites.add(6);
+
+            ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName);
+            dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            ArrayAdapter<Integer> capaciteAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item,capacites);
+            capaciteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 //handle the FAB : Menu + buttons
             menu_book = (FloatingActionMenu) findViewById(R.id.menu_book);
@@ -79,6 +106,20 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
             fab_book.setOnClickListener(clickListener);
             fab_cancel.setOnClickListener(clickListener);
 
+            title = (EditText)findViewById(R.id.titre);
+
+            depart = (Spinner) findViewById(R.id.depart);
+            destination = (Spinner) findViewById(R.id.destination);
+            capacite = (Spinner) findViewById(R.id.capacite);
+
+            depart.setSelection(0);
+            depart.setAdapter(dataAdapterR);
+
+            destination.setSelection(0);
+            destination.setAdapter(dataAdapterR);
+
+            capacite.setSelection(0);
+            capacite.setAdapter(capaciteAdapter);
 
             dateDepart = (EditText) findViewById(R.id.date_depart);
             heureDepart = (EditText) findViewById(R.id.heure_depart);
@@ -109,12 +150,38 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
 
         private void createAndShowAlertDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Nouveau offre");
-            builder.setMessage("Publier cet offre?");
+            builder.setTitle("Nouvelle offre de covoiturage");
+            builder.setMessage("Voulez-vous publier cette offre?");
             builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     //TODO
-                    dialog.dismiss();
+                    int departAgency= AgencyController.getAgencyByName(depart.getSelectedItemPosition());
+                    int destinationAgency=AgencyController.getAgencyByName(destination.getSelectedItemPosition());
+
+                    String departDate= dateDepart.getText().toString();
+                    String departHour=heureDepart.getText().toString();
+
+
+                    if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="" || capacite.getSelectedItemPosition() ==0) {
+                        Toast.makeText(getApplicationContext(),"Remplir tous les champs",Toast.LENGTH_LONG);
+                    }
+                    else {
+                        Covoiturage covoiturage = new Covoiturage();
+                        covoiturage.setDepartureAgency(departAgency);
+                        covoiturage.setArrivalAgency(destinationAgency);
+                        covoiturage.setTitle(title.getText().toString());
+                        covoiturage.setDepartureTime(departDate + "T" + departHour + ":00");
+                        int capacity = (Integer)capacite.getSelectedItem();
+                        covoiturage.setCapacite(capacity);
+                        Log.v("else", departDate + "T" + departHour + ":00");
+                        Log.v("else", String.valueOf(departAgency));
+                        Log.v("else", String.valueOf(destinationAgency));
+                        Log.v("capacite", String.valueOf(covoiturage.getCapacite()));
+                        CovoiturageController.addTravel(covoiturage, getApplicationContext());
+                        finish();
+                        startActivity(new Intent(CreateCovoiturageOfferActivity.this,MainActivity.class));
+                    }
+
                 }
             });
             builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -141,12 +208,11 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
 
     private void updateDateLabel() {
 
-        String myFormat = "dd/MM/yyyy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
 
         dateDepart.setText(sdf.format(myCalendar.getTime()));
     }
-
 
     // handling time
 
@@ -154,16 +220,13 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             myCalendar.set(Calendar.MINUTE, minute);
-            updateTimeLabel();
+            updateTimeLabel(hourOfDay, minute);
         }
     };
 
-    private void updateTimeLabel() {
-
-        heureDepart.setText(myCalendar.get(Calendar.HOUR_OF_DAY) + ":"+myCalendar.get(Calendar.MINUTE));
+    private void updateTimeLabel(int hourOfDay,int minute) {
+        heureDepart.setText(String.format("%02d:%02d",hourOfDay,minute));
     }
-
-
 
 
     @Override

@@ -68,7 +68,10 @@
              android:layout_width="match_parent"
              android:layout_height="40dp"
              android:id="@+id/capacite"
-             android:layout_below="@+id/heure_depart"/>
+             android:textColor="#455A64"
+             android:textColorHint="@color/timestamp"
+             android:layout_below="@+id/heure_depart"
+             />
 
          <EditText
              android:id="@+id/titre"

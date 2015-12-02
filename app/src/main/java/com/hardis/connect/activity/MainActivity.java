@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                     covoiturage.setDepartureAgency(departureAgencyId);
                     covoiturage.setArrivalAgency(destinationAgencyId);
                     covoiturage.setDepartureTime(departureDate);
-                    CovoiturageController.createCovoiturage(covoiturage, getApplicationContext(), new VolleyCallBack() {
+                    /*CovoiturageController.createCovoiturage(covoiturage, getApplicationContext(), new VolleyCallBack() {
                         @Override
                         public void onSuccess(String result) {
 
@@ -178,7 +178,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         public void onFailed(String result) {
                             Log.v("create", "failed");
                         }
-                    });
+                    });*/
 
                 }
             }

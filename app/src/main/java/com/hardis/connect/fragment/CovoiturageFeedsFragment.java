@@ -27,9 +27,13 @@ import com.hardis.connect.controller.VolleyCallBack;
 import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.model.CovoiturageOffreItem;
 import com.hardis.connect.model.NavDrawerItem;
+import com.hardis.connect.util.GlobalMethodes;
 
 import java.net.ConnectException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,28 +41,37 @@ public class CovoiturageFeedsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private List<CovoiturageOffreItem> data = new ArrayList<>();
+    private List<Covoiturage> covoiturages;
 
     public static CovoiturageFeedsFragment newInstance() {
         return new CovoiturageFeedsFragment();
     }
 
-    public static List<CovoiturageOffreItem> getData(Context context) {
-        final List<CovoiturageOffreItem> data = new ArrayList<>();
-
-        CovoiturageController.getOffresCovoiturage(context, new VolleyCallBack() {
+    public void getData() {
+        if(covoiturages!=null)
+        {
+            covoiturages.clear();
+            data.clear();
+        }
+        CovoiturageController.getOffresCovoiturage(getActivity().getApplicationContext(), new VolleyCallBack() {
             @Override
             public void onSuccess(String result) {
-                List<Covoiturage> covoiturages = CovoiturageController.getCovoiturages();
+                covoiturages = CovoiturageController.getCovoiturages();
                 for (int i = 0; i < covoiturages.size(); i++) {
                     CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
                     offreItem.setUserName(covoiturages.get(i).getUserName());
-                    offreItem.setTimeStamp("1h");
+                    String timeStamp=calculateTimeStamp(covoiturages.get(i).getDateCreation());
+                    covoiturages.get(i).setTimeStamp(timeStamp);
+                    offreItem.setTimeStamp(timeStamp);
                     offreItem.setTrajet(covoiturages.get(i).getDepartureAgencyName() + " >> " + covoiturages.get(i).getArrivalAgencyName());
-                    offreItem.setDate(covoiturages.get(i).getDepartureTime());
+                    offreItem.setDate(covoiturages.get(i).getDepartureTime().replace("T"," "));
                     offreItem.setCapacite(covoiturages.get(i).getCapacite() + " place(s) disponible(s)");
                     offreItem.setImgResID(R.drawable.col4);
                     data.add(offreItem);
                 }
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
@@ -66,57 +79,46 @@ public class CovoiturageFeedsFragment extends Fragment {
 
             }
         });
-
-
-        // preparing navigation drawer items
-        CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
-        offreItem.setUserName("Hassan El Moutaraji");
-        offreItem.setTimeStamp("1h");
-        offreItem.setTrajet("Lyon >> Paris");
-        offreItem.setDate("Demain à 10h");
-        offreItem.setCapacite("2 place(s) disponible(s)");
-        offreItem.setImgResID(R.drawable.col4);
-        data.add(offreItem);
-
-        CovoiturageOffreItem offreItem2 = new CovoiturageOffreItem();
-        offreItem2.setUserName("Maha Benannou");
-        offreItem2.setTimeStamp("1h");
-        offreItem2.setTrajet("Paris >> Grenoble");
-        offreItem2.setDate("Mardi à 14h");
-        offreItem2.setCapacite("2 place(s) disponible(s)");
-        offreItem2.setImgResID(R.drawable.ibm);
-        data.add(offreItem2);
-
-        CovoiturageOffreItem offreItem3 = new CovoiturageOffreItem();
-        offreItem3.setUserName("Minh Trinh Hoang");
-        offreItem3.setTimeStamp("1h");
-        offreItem3.setTrajet("Lyon >> Grenoble");
-        offreItem3.setDate("Mercredi à 10h");
-        offreItem3.setCapacite("2 place(s) disponible(s)");
-        offreItem3.setImgResID(R.drawable.col2);
-        data.add(offreItem3);
-
-        CovoiturageOffreItem offreItem4 = new CovoiturageOffreItem();
-        offreItem4.setUserName("Israe El Moutaraji");
-        offreItem4.setTimeStamp("1h");
-        offreItem4.setTrajet("Grenoble >> Lyon");
-        offreItem4.setDate("Mercredi à 11h");
-        offreItem4.setCapacite("2 place(s) disponible(s)");
-        offreItem4.setImgResID(R.drawable.col3);
-        data.add(offreItem4);
-
-        CovoiturageOffreItem offreItem5 = new CovoiturageOffreItem();
-        offreItem5.setUserName("Alexandra Dupond");
-        offreItem5.setTimeStamp("1h");
-        offreItem5.setTrajet("Lyon >> Paris");
-        offreItem5.setDate("Jeudi à 9h");
-        offreItem5.setCapacite("2 place(s) disponible(s)");
-        offreItem5.setImgResID(R.drawable.ibm);
-        data.add(offreItem5);
-
-        return data;
     }
 
+    private String calculateTimeStamp(String dateCreation) {
+        SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
+        Date date1=null,date2=null;
+        String timeStamp="";
+
+        try {
+            date1 = simpleDateFormat.parse(dateCreation.replace("T"," "));
+            Log.v("date1", date1.toString());
+            date2 = new Date();
+            Log.v("date2",date2.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long result[] = GlobalMethodes.printDifference(date1, date2);
+        if(result.length ==0) return "";
+        else {
+            if(result[0]!=0)
+            {
+                timeStamp = String.valueOf(result[0])+"d";
+            }
+            else if(result[1]!=0)
+            {
+                timeStamp = String.valueOf(result[1])+"h";
+            }
+            else if (result[2]!=0)
+            {
+                timeStamp = String.valueOf(result[2])+"m";
+            }
+            else if (result[3]!=0)
+            {
+                timeStamp = String.valueOf(result[3])+"m";
+            }
+            return timeStamp;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -132,6 +134,7 @@ public class CovoiturageFeedsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+        mAdapter = new RecyclerViewMaterialAdapter(new CovoiturageFeedsFragmentAdapter(data));
 
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -139,7 +142,10 @@ public class CovoiturageFeedsFragment extends Fragment {
                 // Save the position and pass it as an argument to the bundle so you can retrive the details later
                 //   Bundle bundle = fragment.getArguments();
                 //   bundle.putInteger("position",position);
-                startActivity(new Intent(getActivity(), CovoiturageOfferDetailsActivity.class));
+                Intent intent =  new Intent(getActivity(), CovoiturageOfferDetailsActivity.class);
+                Log.v("position",String.valueOf(position));
+                intent.putExtra("covoiturage",covoiturages.get(position-1));
+                startActivity(intent);
 
             }
 
@@ -149,10 +155,8 @@ public class CovoiturageFeedsFragment extends Fragment {
             }
         }));
 
+        getData();
         //penser à passer notre Adapter (ici : FeedsFragmentAdapter) à un RecyclerViewMaterialAdapter
-        mAdapter = new RecyclerViewMaterialAdapter(new CovoiturageFeedsFragmentAdapter(getData(getActivity().getApplicationContext())));
-        mRecyclerView.setAdapter(mAdapter);
-
         //notifier le MaterialViewPager qu'on va utiliser une RecyclerView
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }

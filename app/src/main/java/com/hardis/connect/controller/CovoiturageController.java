@@ -33,20 +33,22 @@ import java.util.Map;
  */
 public class CovoiturageController {
 
-    private final static List<Covoiturage> covoiturages = new ArrayList<>();
+    final static private List<Covoiturage> covoiturages = new ArrayList<>();
 
-    public static List<Covoiturage> getOffresCovoiturage(final Context context,final VolleyCallBack callBack) {
-
+    public static List<Covoiturage> getOffresCovoiturage(final Context context, final VolleyCallBack callBack) {
         StringRequest request = new StringRequest(Request.Method.GET, AllUrls.get_offres_covoiturage_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONArray data = new JSONArray(response);
+                            Log.v("response",response);
                             for(int i=0;i<data.length();i++) {
                                 int capacity = data.getJSONObject(i).getInt("Capacity");
                                 String username = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("FirstName")+
                                         data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
+                                String title = data.getJSONObject(i).getJSONObject("Publication").getString("Title");
+                                String dateCreation = data.getJSONObject(i).getJSONObject("Publication").getString("DateTimeCreation");
                                 String departureAgency=data.getJSONObject(i).getJSONObject("DepartureAgency").getString("Name");
                                 String arrivalAgency=data.getJSONObject(i).getJSONObject("ArrivalAgency").getString("Name");
                                 String departureDate= data.getJSONObject(i).getString("DepartureTime");
@@ -56,6 +58,8 @@ public class CovoiturageController {
                                 covoiturage.setArrivalAgencyName(arrivalAgency);
                                 covoiturage.setDepartureTime(departureDate);
                                 covoiturage.setUserName(username);
+                                covoiturage.setTitle(title);
+                                covoiturage.setDateCreation(dateCreation);
                                 covoiturages.add(covoiturage);
                             }
                             callBack.onSuccess("success");
@@ -85,9 +89,10 @@ public class CovoiturageController {
         return covoiturages;
     }
 
-    public static void testAddTravel(Covoiturage covoiturage,Context context, final VolleyCallBack callBack) {
+    public static void addTravel(Covoiturage covoiturage,final Context context) {
         JsonObjectRequest request = null;
         try {
+
             JSONObject jsonObj = new JSONObject();
             JSONObject publication = new JSONObject();
             JSONObject group = new JSONObject();
@@ -98,39 +103,39 @@ public class CovoiturageController {
             category.put("Id",1);
             publication.put("Group",group);
             publication.put("Category",category);
-            publication.put("Title","Test Title JSON Nested");
-            publication.put("Description","Test description");
+            publication.put("Title",covoiturage.getTitle());
+            publication.put("Description", "Test description");
             jsonObj.put("Publication",publication);
-            jsonObj.put("Capacity",9);
-            depart.put("Id",1);
-            arrival.put("Id",1);
+            jsonObj.put("Capacity",covoiturage.getCapacite());
+            depart.put("Id",covoiturage.getDepartureAgency());
+            arrival.put("Id",covoiturage.getArrivalAgency());
             jsonObj.put("DepartureAgency",depart);
             jsonObj.put("ArrivalAgency",arrival);
-            jsonObj.put("DepartureTime","2015-12-06T12:30:00");
+            jsonObj.put("DepartureTime",covoiturage.getDepartureTime());
             jsonObj.put("ArrivalTime","2015-12-07T15:30:00");
 
-
-            request = new JsonObjectRequest(Request.Method.POST, "http://connext2.azurewebsites.net/api/travels/", jsonObj,
+            Log.v("json", jsonObj.toString());
+            request = new JsonObjectRequest(Request.Method.POST,AllUrls.add_covoiturage_url, jsonObj,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            callBack.onSuccess("success");
-                            Log.v("hoang","success");
-
+                            Log.v("response","success");
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             VolleyLog.d("Response", error.getMessage());
-                            callBack.onFailed("failed");
                         }
                     }
-
             ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
+                    SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+                    String token =pref.getString("token",null);
+                    Log.v("token",token);
+                    params.put("Authorization", token);
                     return params;
                 }
             };

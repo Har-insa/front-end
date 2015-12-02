@@ -1,21 +1,22 @@
 package com.hardis.connect.model;
 
+import java.io.Serializable;
+
 /**
  * Created by a on 28/11/2015.
  */
-public class Covoiturage {
+public class Covoiturage implements Serializable{
 
     private int departureAgency;
     private int arrivalAgency;
     private String departureAgencyName;
     private String arrivalAgencyName;
     private String departureDate;
-    private String arrivalDate;
     private String title;
-    private String description;
     private int capacite;
     private String userName;
-
+    private String dateCreation;
+    private String timeStamp;
 
 
     public int getDepartureAgency() {
@@ -40,14 +41,6 @@ public class Covoiturage {
 
     public void setDepartureTime(String departureTime) {
         this.departureDate = departureTime;
-    }
-
-    public String getArrivalTime() {
-        return arrivalDate;
-    }
-
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalDate = arrivalTime;
     }
 
     public int getCapacite() {
@@ -80,5 +73,29 @@ public class Covoiturage {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

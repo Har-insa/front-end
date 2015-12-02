@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="18sp"
-        android:text="Arrivée : "
+        android:text="Destination: "
         android:layout_below="@+id/label_depart"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
