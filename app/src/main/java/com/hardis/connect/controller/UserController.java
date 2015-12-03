@@ -70,6 +70,11 @@ public class UserController {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            Log.v("token", response.toString());
+                            SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("token", response.toString());
+                            editor.commit();
                             callBack.onSuccess("success");
                         }
                     },
