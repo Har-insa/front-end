@@ -2,6 +2,7 @@ package com.hardis.connect.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -19,10 +20,24 @@ import com.android.volley.toolbox.StringRequest;
 import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.util.AllUrls;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +61,10 @@ public class CovoiturageController {
                             for(int i=0;i<data.length();i++) {
                                 int capacity = data.getJSONObject(i).getInt("Capacity");
                                 String username = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("FirstName")+
-                                        data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
+                                        " "+data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
                                 String title = data.getJSONObject(i).getJSONObject("Publication").getString("Title");
                                 String dateCreation = data.getJSONObject(i).getJSONObject("Publication").getString("DateTimeCreation");
+                                Log.v("tarikh",dateCreation);
                                 String departureAgency=data.getJSONObject(i).getJSONObject("DepartureAgency").getString("Name");
                                 String arrivalAgency=data.getJSONObject(i).getJSONObject("ArrivalAgency").getString("Name");
                                 String departureDate= data.getJSONObject(i).getString("DepartureTime");
@@ -134,8 +150,11 @@ public class CovoiturageController {
                     Map<String, String> params = new HashMap<String, String>();
                     SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
                     String token =pref.getString("token",null);
-                    Log.v("token",token);
+                    Log.v("token", token);
                     params.put("Authorization", token);
+                    params.put("Accept-Encoding", "gzip, deflate, sdch");
+                    params.put("Accept", "*/*");
+
                     return params;
                 }
             };
@@ -151,3 +170,4 @@ public class CovoiturageController {
     }
 
 }
+

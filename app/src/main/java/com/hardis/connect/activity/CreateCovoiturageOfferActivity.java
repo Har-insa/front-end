@@ -162,7 +162,7 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
                     String departHour=heureDepart.getText().toString();
 
 
-                    if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="" || capacite.getSelectedItemPosition() ==0) {
+                    if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="") {
                         Toast.makeText(getApplicationContext(),"Remplir tous les champs",Toast.LENGTH_LONG);
                     }
                     else {
@@ -179,7 +179,9 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
                         Log.v("capacite", String.valueOf(covoiturage.getCapacite()));
                         CovoiturageController.addTravel(covoiturage, getApplicationContext());
                         finish();
-                        startActivity(new Intent(CreateCovoiturageOfferActivity.this,MainActivity.class));
+                        Intent i = new Intent(getBaseContext(), MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                     }
 
                 }

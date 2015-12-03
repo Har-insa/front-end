@@ -16,12 +16,12 @@
         android:paddingRight="@dimen/feed_item_padding_left_right" >
 
         <ImageView
-            android:id="@+id/profilePic"
+            android:id="@+id/profileP"
             android:layout_width="@dimen/feed_item_profile_pic_detail"
             android:layout_height="@dimen/feed_item_profile_pic_detail"
             android:layout_marginTop="7dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ibm">
+            android:src="@drawable/ic_profile">
         </ImageView>
 
         <LinearLayout

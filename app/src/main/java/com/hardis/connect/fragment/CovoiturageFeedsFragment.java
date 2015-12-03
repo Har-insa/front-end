@@ -1,5 +1,6 @@
 package com.hardis.connect.fragment;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -49,16 +50,12 @@ public class CovoiturageFeedsFragment extends Fragment {
     }
 
     public void getData() {
-        if(covoiturages!=null)
-        {
-            covoiturages.clear();
-            data.clear();
-        }
+
         CovoiturageController.getOffresCovoiturage(getActivity().getApplicationContext(), new VolleyCallBack() {
             @Override
             public void onSuccess(String result) {
                 covoiturages = CovoiturageController.getCovoiturages();
-                for (int i = 0; i < covoiturages.size(); i++) {
+                for (int i =0;i<covoiturages.size();i++) {
                     CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
                     offreItem.setUserName(covoiturages.get(i).getUserName());
                     String timeStamp=calculateTimeStamp(covoiturages.get(i).getDateCreation());
@@ -67,7 +64,7 @@ public class CovoiturageFeedsFragment extends Fragment {
                     offreItem.setTrajet(covoiturages.get(i).getDepartureAgencyName() + " >> " + covoiturages.get(i).getArrivalAgencyName());
                     offreItem.setDate(covoiturages.get(i).getDepartureTime().replace("T"," "));
                     offreItem.setCapacite(covoiturages.get(i).getCapacite() + " place(s) disponible(s)");
-                    offreItem.setImgResID(R.drawable.col4);
+                    offreItem.setImgResID(R.drawable.ic_profile);
                     data.add(offreItem);
                 }
                 mAdapter.notifyDataSetChanged();
@@ -83,7 +80,7 @@ public class CovoiturageFeedsFragment extends Fragment {
 
     private String calculateTimeStamp(String dateCreation) {
         SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Log.v("datecreation",dateCreation);
         Date date1=null,date2=null;
@@ -117,7 +114,7 @@ public class CovoiturageFeedsFragment extends Fragment {
             }
             else if (result[3]!=0)
             {
-                timeStamp = String.valueOf(result[3])+"m";
+                timeStamp = String.valueOf(result[3])+"s";
             }
             return timeStamp;
         }
@@ -125,6 +122,15 @@ public class CovoiturageFeedsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if(covoiturages!=null)
+        {
+            covoiturages.clear();
+        }
+        if(data!=null)
+        {
+            data.clear();
+        }
         return inflater.inflate(R.layout.covoiturage_search_recyclerview, container, false);
     }
 
@@ -146,7 +152,6 @@ public class CovoiturageFeedsFragment extends Fragment {
                 //   Bundle bundle = fragment.getArguments();
                 //   bundle.putInteger("position",position);
                 Intent intent =  new Intent(getActivity(), CovoiturageOfferDetailsActivity.class);
-                Log.v("position",String.valueOf(position));
                 intent.putExtra("covoiturage",covoiturages.get(position-1));
                 startActivity(intent);
 

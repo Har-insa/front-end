@@ -105,7 +105,8 @@ public class CovoiturageOfferDetailsActivity extends ActionBarActivity {
             if(bundle== null) return;
             Covoiturage covoiturage = (Covoiturage) getIntent().getSerializableExtra("covoiturage");
             userName.setText(covoiturage.getUserName());
-            title.setText("\""+covoiturage.getTitle()+"\"");
+            if(covoiturage.getTitle()!="")
+            title.setText(covoiturage.getTitle());
             timeStamp.setText(covoiturage.getTimeStamp());
             departAgency.setText(covoiturage.getDepartureAgencyName());
             arrivalAgency.setText(covoiturage.getArrivalAgencyName());
