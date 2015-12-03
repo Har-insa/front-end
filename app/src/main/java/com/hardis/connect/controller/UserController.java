@@ -61,7 +61,7 @@ public class UserController {
         RequestController.getInstance(context).addToRequestQueue(request);
     }
 
-   public static void authenticateUser(Context context,final User user, final VolleyCallBack callBack) {
+   public static void authenticateUser(final Context context,final User user, final VolleyCallBack callBack) {
         JsonObjectRequest request = null;
         try {
             JSONObject jsonBody = new JSONObject("{\"Email\":\""+user.getEmail()+"\",\"Password\":\""+user.getPassword()+"\"}");
