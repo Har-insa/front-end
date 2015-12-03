@@ -83,13 +83,16 @@ public class CovoiturageFeedsFragment extends Fragment {
 
     private String calculateTimeStamp(String dateCreation) {
         SimpleDateFormat simpleDateFormat =
-                new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
+        Log.v("datecreation",dateCreation);
         Date date1=null,date2=null;
         String timeStamp="";
 
         try {
-            date1 = simpleDateFormat.parse(dateCreation.replace("T"," "));
+            dateCreation = dateCreation.replace("T"," ");
+            Log.v("datecreationnew",dateCreation);
+            date1 = simpleDateFormat.parse(dateCreation);
             Log.v("date1", date1.toString());
             date2 = new Date();
             Log.v("date2",date2.toString());
