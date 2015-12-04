@@ -142,6 +142,8 @@ public class CovoiturageController {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             VolleyLog.d("Response", error.getMessage());
+                            Log.v("Response",error.getClass().toString());
+                            error.printStackTrace();
                         }
                     }
             ) {
@@ -152,8 +154,8 @@ public class CovoiturageController {
                     String token =pref.getString("token",null);
                     Log.v("token", token);
                     params.put("Authorization", token);
-                    params.put("Accept-Encoding", "gzip, deflate, sdch");
-                    params.put("Accept", "*/*");
+                    //params.put("Accept-Encoding", "gzip, deflate, sdch");
+                   // params.put("Accept", "*/*");
 
                     return params;
                 }

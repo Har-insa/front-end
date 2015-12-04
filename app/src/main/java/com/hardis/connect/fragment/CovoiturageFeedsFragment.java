@@ -112,10 +112,14 @@ public class CovoiturageFeedsFragment extends Fragment {
             {
                 timeStamp = String.valueOf(result[2])+"m";
             }
-            else if (result[3]!=0)
+            else if (result[3]!=0 && result[3] >0)
             {
                 timeStamp = String.valueOf(result[3])+"s";
             }
+			else if(result[3] <= 0)
+			{
+			timeStamp = "3s";
+			}
             return timeStamp;
         }
     }

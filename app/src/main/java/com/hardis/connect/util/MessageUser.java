@@ -37,7 +37,7 @@ public class MessageUser {
         EnglishMessages.put("1210","All feilds must be completed");
         EnglishMessages.put("1211","No demand from this user");
 
-        EnglishMessages.put("2101","Your registration was successuful");
+        EnglishMessages.put("2101","Compte créé avec succès");
         EnglishMessages.put("2102","Your authentification was successful");
 
 

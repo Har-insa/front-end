@@ -63,7 +63,6 @@ public class AuthenticationActivity extends ActionBarActivity {
                             UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
                                 @Override
                                 public void onSuccess(String result) {
-                                    Toast.makeText(AuthenticationActivity.this, MessageUser.get("2102"), Toast.LENGTH_SHORT).show();
                                     Intent i = new Intent(getBaseContext(), MainActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(i);

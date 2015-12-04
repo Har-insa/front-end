@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -16,10 +17,12 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -118,8 +121,19 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
             destination.setSelection(0);
             destination.setAdapter(dataAdapterR);
 
-            capacite.setSelection(0);
             capacite.setAdapter(capaciteAdapter);
+            capacite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    ((TextView)adapterView.getChildAt(0)).setTextColor(getResources().getColor(R.color.maha));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
 
             dateDepart = (EditText) findViewById(R.id.date_depart);
             heureDepart = (EditText) findViewById(R.id.heure_depart);

@@ -19,7 +19,7 @@
     <color name="navigationBarColor">@android:color/black</color>
     <color name="drawerArrowColor">@android:color/white</color>
     <color name="timestamp">#a0a3a7</color>
-
+    <color name="maha">#455A64</color>
 
 
 </resources>
