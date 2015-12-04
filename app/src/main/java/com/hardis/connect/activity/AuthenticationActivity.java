@@ -59,6 +59,7 @@ public class AuthenticationActivity extends ActionBarActivity {
                         else {
                             hashedPass = GlobalMethodes.md5(pwd);
                             User user = new User(login,hashedPass);
+                            GlobalMethodes.username=login;
 
                             UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
                                 @Override

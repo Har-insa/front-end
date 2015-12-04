@@ -3,6 +3,7 @@ package com.hardis.connect.fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -44,6 +45,8 @@ public class CovoiturageFeedsFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private List<CovoiturageOffreItem> data = new ArrayList<>();
     private List<Covoiturage> covoiturages;
+    private static TypedArray imgs;
+
 
     public static CovoiturageFeedsFragment newInstance() {
         return new CovoiturageFeedsFragment();
@@ -55,6 +58,7 @@ public class CovoiturageFeedsFragment extends Fragment {
             @Override
             public void onSuccess(String result) {
                 covoiturages = CovoiturageController.getCovoiturages();
+                int k=0;
                 for (int i =0;i<covoiturages.size();i++) {
                     CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
                     offreItem.setUserName(covoiturages.get(i).getUserName());
@@ -62,11 +66,17 @@ public class CovoiturageFeedsFragment extends Fragment {
                     covoiturages.get(i).setTimeStamp(timeStamp);
                     offreItem.setTimeStamp(timeStamp);
                     offreItem.setTrajet(covoiturages.get(i).getDepartureAgencyName() + " >> " + covoiturages.get(i).getArrivalAgencyName());
-                    offreItem.setDate(covoiturages.get(i).getDepartureTime().replace("T"," "));
+                    offreItem.setDate(covoiturages.get(i).getDepartureTime().replace("T", " "));
                     offreItem.setCapacite(covoiturages.get(i).getCapacite() + " place(s) disponible(s)");
-                    offreItem.setImgResID(R.drawable.ic_profile);
+
+                    offreItem.setImgResID(imgs.getResourceId(k, 1));
+                    k++;
+                    if(k>=imgs.length()){
+                        k=0;
+                    }
                     data.add(offreItem);
                 }
+                Log.v("size",String.valueOf(data.size()));
                 mAdapter.notifyDataSetChanged();
                 mRecyclerView.setAdapter(mAdapter);
             }
@@ -127,13 +137,15 @@ public class CovoiturageFeedsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        imgs = getResources().obtainTypedArray(R.array.profile_icons);
         if(covoiturages!=null)
         {
             covoiturages.clear();
         }
         if(data!=null)
         {
-            data.clear();
+            Log.v("size","remove data");
+            data.removeAll(data);
         }
         return inflater.inflate(R.layout.covoiturage_search_recyclerview, container, false);
     }
@@ -147,6 +159,7 @@ public class CovoiturageFeedsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+
         mAdapter = new RecyclerViewMaterialAdapter(new CovoiturageFeedsFragmentAdapter(data));
 
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {

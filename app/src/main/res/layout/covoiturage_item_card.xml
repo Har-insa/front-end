@@ -38,7 +38,7 @@
                     android:layout_height="@dimen/feed_item_profile_pic"
                     android:layout_marginTop="3dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ibm">
+                    android:src="@drawable/col1">
                 </ImageView>
 
                 <LinearLayout

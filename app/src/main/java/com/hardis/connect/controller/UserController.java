@@ -40,7 +40,11 @@ public class UserController {
                             Log.v("token", response.toString());
                             SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
                             SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("token", response.toString());
+                            try {
+                                editor.putString("token", response.getString("token"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             editor.commit();
                             callBack.onSuccess("success");
                         }
@@ -73,7 +77,11 @@ public class UserController {
                             Log.v("token", response.toString());
                             SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
                             SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("token", response.toString());
+                            try {
+                                editor.putString("token", response.getString("token"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             editor.commit();
                             callBack.onSuccess("success");
                         }

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.hardis.connect.R;
 import com.hardis.connect.adapter.NavigationDrawerAdapter;
 import com.hardis.connect.model.NavDrawerItem;
+import com.hardis.connect.util.GlobalMethodes;
 
 
 import java.util.ArrayList;
@@ -94,6 +95,7 @@ public class FragmentDrawer extends Fragment {
         barcode = (ImageView) layout.findViewById(R.id.barcode);
         accountIcon =  (ImageButton) layout.findViewById(R.id.imageView);
         textViewLogIn = (TextView) layout.findViewById(R.id.user_name_label);
+        textViewLogIn.setText(GlobalMethodes.username);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);

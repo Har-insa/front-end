@@ -51,6 +51,7 @@ public class CovoiturageController {
     final static private List<Covoiturage> covoiturages = new ArrayList<>();
 
     public static List<Covoiturage> getOffresCovoiturage(final Context context, final VolleyCallBack callBack) {
+        covoiturages.clear();
         StringRequest request = new StringRequest(Request.Method.GET, AllUrls.get_offres_covoiturage_url,
                 new Response.Listener<String>() {
                     @Override
@@ -136,6 +137,7 @@ public class CovoiturageController {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.v("response","success");
+                            Log.v("response",response.toString());
                         }
                     },
                     new Response.ErrorListener() {

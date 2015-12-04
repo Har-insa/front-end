@@ -19,6 +19,11 @@
         <item>@mipmap/ic_list_black_24dp</item>
     </string-array>
 
-
+   <string-array name="profile_icons">
+       <item>@drawable/col1</item>
+       <item>@drawable/col2</item>
+       <item>@drawable/col3</item>
+       <item>@drawable/col4</item>
+   </string-array>
 
 </resources>
