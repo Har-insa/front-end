@@ -6,11 +6,17 @@ package com.hardis.connect.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +30,9 @@ import java.util.Date;
 public class GlobalMethodes {
 
     public static String username;
+    public static int id;
+    public static String fullname;
+
     public static boolean isNumeric(char n) {
         return (n=='0' || n=='1'|| n=='2'|| n=='3'|| n=='4'|| n=='5'|| n=='6'|| n=='7'|| n=='8'|| n=='9');
 
@@ -94,5 +103,22 @@ public class GlobalMethodes {
         return result;
     }
 
+    public static void sendNotification(String title,String content,String recipientId){
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject();
+            jsonObject.put("alert", content);
+            jsonObject.put("title", title);
 
+            ParsePush push = new ParsePush();
+            ParseQuery query = ParseInstallation.getQuery();
+            query.whereEqualTo("userName",recipientId);
+            query.whereEqualTo("deviceType","android");
+            push.setQuery(query);
+            push.setData(jsonObject);
+            push.sendInBackground();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

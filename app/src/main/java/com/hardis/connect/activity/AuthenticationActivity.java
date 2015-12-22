@@ -20,7 +20,7 @@ import com.hardis.connect.controller.VolleyCallBack;
 import com.hardis.connect.model.User;
 import com.hardis.connect.util.GlobalMethodes;
 import com.hardis.connect.util.MessageUser;
-
+import com.parse.ParseInstallation;
 
 
 public class AuthenticationActivity extends ActionBarActivity {
@@ -59,11 +59,15 @@ public class AuthenticationActivity extends ActionBarActivity {
                         else {
                             hashedPass = GlobalMethodes.md5(pwd);
                             User user = new User(login,hashedPass);
-                            GlobalMethodes.username=login;
 
                             UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
                                 @Override
                                 public void onSuccess(String result) {
+                                    GlobalMethodes.username=login;
+                                    ParseInstallation parseInstallation =ParseInstallation.getCurrentInstallation();
+                                    parseInstallation.put("userName",GlobalMethodes.username);
+                                    parseInstallation.saveInBackground();
+
                                     Intent i = new Intent(getBaseContext(), MainActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(i);

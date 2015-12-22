@@ -7,16 +7,19 @@ import java.io.Serializable;
  */
 public class Covoiturage implements Serializable{
 
+    private int id;
     private int departureAgency;
     private int arrivalAgency;
     private String departureAgencyName;
     private String arrivalAgencyName;
     private String departureDate;
+    private String arrivalDate;
     private String title;
     private int capacite;
     private String userName;
     private String dateCreation;
     private String timeStamp;
+    private String email;
 
 
     public int getDepartureAgency() {
@@ -97,5 +100,29 @@ public class Covoiturage implements Serializable{
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(String arrivalDate) {
+        this.arrivalDate = arrivalDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

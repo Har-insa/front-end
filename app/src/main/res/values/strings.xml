@@ -46,4 +46,8 @@
         <item>@string/nav_item_conitions_generales</item>
         <item>@string/nav_item_se_deconnecter</item>
     </string-array>
+
+
+    <string name="app_key">T8DMGrbZh7i69YfOMg2OiJrhMEBcR02RncN8Z4TF</string>
+    <string name="client_key">FFzlkrhCamOTZbSYTxM4vYYMzckuxGk0A5ZXheyN</string>
 </resources>

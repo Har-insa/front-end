@@ -17,8 +17,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.hardis.connect.HardisConnect;
 import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.util.AllUrls;
+import com.hardis.connect.util.GlobalMethodes;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -60,20 +62,30 @@ public class CovoiturageController {
                             JSONArray data = new JSONArray(response);
                             Log.v("response",response);
                             for(int i=0;i<data.length();i++) {
+                                int id = data.getJSONObject(i).getInt("Id");
+                                Log.v("idCovoiturage",String.valueOf(id));
                                 int capacity = data.getJSONObject(i).getInt("Capacity");
                                 String username = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("FirstName")+
                                         " "+data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
+                                String email = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Email");
+                                if(email.compareTo(GlobalMethodes.username) == -1) {
+                                    GlobalMethodes.id=data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getInt("Id");
+                                    GlobalMethodes.fullname=username;
+                                }
                                 String title = data.getJSONObject(i).getJSONObject("Publication").getString("Title");
                                 String dateCreation = data.getJSONObject(i).getJSONObject("Publication").getString("DateTimeCreation");
-                                Log.v("tarikh",dateCreation);
                                 String departureAgency=data.getJSONObject(i).getJSONObject("DepartureAgency").getString("Name");
                                 String arrivalAgency=data.getJSONObject(i).getJSONObject("ArrivalAgency").getString("Name");
                                 String departureDate= data.getJSONObject(i).getString("DepartureTime");
+                                String arrivalDate = data.getJSONObject(i).getString("ArrivalTime");
                                 Covoiturage covoiturage=new Covoiturage();
+                                covoiturage.setId(id);
+                                covoiturage.setEmail(email);
                                 covoiturage.setCapacite(capacity);
                                 covoiturage.setDepartureAgencyName(departureAgency);
                                 covoiturage.setArrivalAgencyName(arrivalAgency);
                                 covoiturage.setDepartureTime(departureDate);
+                                covoiturage.setArrivalDate(arrivalDate);
                                 covoiturage.setUserName(username);
                                 covoiturage.setTitle(title);
                                 covoiturage.setDateCreation(dateCreation);
@@ -129,7 +141,8 @@ public class CovoiturageController {
             jsonObj.put("DepartureAgency",depart);
             jsonObj.put("ArrivalAgency",arrival);
             jsonObj.put("DepartureTime",covoiturage.getDepartureTime());
-            jsonObj.put("ArrivalTime","2015-12-07T15:30:00");
+            //jsonObj.put("ArrivalTime","2015-12-07T15:30:00");
+            jsonObj.put("ArrivalTime",covoiturage.getArrivalDate());
 
             Log.v("json", jsonObj.toString());
             request = new JsonObjectRequest(Request.Method.POST,AllUrls.add_covoiturage_url, jsonObj,
@@ -157,7 +170,7 @@ public class CovoiturageController {
                     Log.v("token", token);
                     params.put("Authorization", token);
                     //params.put("Accept-Encoding", "gzip, deflate, sdch");
-                   // params.put("Accept", "*/*");
+                    // params.put("Accept", "*/*");
 
                     return params;
                 }

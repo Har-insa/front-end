@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="18sp"
-        android:text="Date : "
+        android:text="Date départ: "
         android:layout_below="@+id/arrive_label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -132,6 +132,28 @@
         android:layout_below="@+id/arrive_label"
         android:layout_toRightOf="@+id/arrive_label"
         android:layout_toEndOf="@+id/arrive_label" />
+
+         <TextView
+             android:id="@+id/datearrivee_label"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="16dp"
+             android:textSize="18sp"
+             android:text="Date arrivée: "
+             android:layout_below="@+id/date_value"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentStart="true" />
+
+         <TextView
+             android:id="@+id/datearrivee_value"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="16dp"
+             android:textSize="18sp"
+             android:text="Lundi à 10h"
+             android:layout_alignTop="@+id/datearrivee_label"
+             android:layout_toRightOf="@+id/datearrivee_label"
+             android:layout_toEndOf="@+id/datearrivee_label" />
 
      </RelativeLayout>
     <com.github.clans.fab.FloatingActionMenu

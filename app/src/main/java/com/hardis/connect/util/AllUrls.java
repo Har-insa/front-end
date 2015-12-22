@@ -5,7 +5,7 @@ package com.hardis.connect.util;
  */
 public class AllUrls {
 
-     public static final String base="http://connext2.azurewebsites.net/api/";
+    public static final String base="http://connext2.azurewebsites.net/api/";
 
     //---- Gestion des agences
     public static final String get_agencies_url=base+"agencies";
@@ -18,6 +18,7 @@ public class AllUrls {
     //---- Gestion des covoiturages
     public static final String add_covoiturage_url=base+"travels";
     public static final String get_offres_covoiturage_url=base+"travels";
+    public static final String book_offer_url=base+"requesttravels";
 
 
 
