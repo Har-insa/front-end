@@ -110,10 +110,11 @@ public class GlobalMethodes {
             jsonObject.put("alert", content);
             jsonObject.put("title", title);
 
+            Log.v("recipientId",recipientId);
             ParsePush push = new ParsePush();
             ParseQuery query = ParseInstallation.getQuery();
-            query.whereEqualTo("userName",recipientId);
             query.whereEqualTo("deviceType","android");
+            query.whereEqualTo("userName",recipientId);
             push.setQuery(query);
             push.setData(jsonObject);
             push.sendInBackground();
