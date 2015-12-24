@@ -3,24 +3,16 @@ package com.hardis.connect.activity;
 /**
  * Created by Hassan on 12/1/2015.
  */
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.format.Time;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -29,16 +21,12 @@ import com.hardis.connect.controller.BookingController;
 import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.util.GlobalMethodes;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-public class CovoiturageOfferDetailsActivity extends ActionBarActivity {
+public class CovoiturageOfferDetailsActivity extends AppCompatActivity {
 
 
     private FloatingActionButton fab_book;

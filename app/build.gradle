@@ -1,15 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.hardis.connect"
-        minSdkVersion 14
-        targetSdkVersion 22
+        minSdkVersion 16
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -20,17 +22,18 @@ android {
 }
 
 dependencies {
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('src/main/java/com/hardis/connect/libs/volley.jar')
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.jpardogo.materialtabstrip:library:1.0.0'
-    compile 'com.android.support:recyclerview-v7:21.0.0'
-    compile 'com.getbase:floatingactionbutton:1.9.0'
-    compile 'com.github.clans:fab:1.6.2'
-    compile ('com.github.florent37:materialviewpager:1.0.3.2@aar'){
+    compile('com.github.florent37:materialviewpager:1.0.3.2@aar') {
         transitive = true
     }
-
+    compile files('src/main/java/com/hardis/connect/libs/Parse-1.9.1.jar')
+    compile files('src/main/java/com/hardis/connect/libs/bolts-android-1.2.0.jar')
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.jpardogo.materialtabstrip:library:1.0.0'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.getbase:floatingactionbutton:1.9.0'
+    compile 'com.github.clans:fab:1.6.2'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }

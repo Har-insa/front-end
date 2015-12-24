@@ -24,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:id="@+id/destination" />
-
     </LinearLayout>
 
      <RelativeLayout
@@ -80,12 +79,19 @@
              android:layout_margin="5dp" />
 
 
-         <Spinner
+         <EditText
+             android:id="@+id/rdv"
              android:layout_width="match_parent"
-             android:layout_height="40dp"
-             android:id="@+id/capacite"
-             android:textColor="#455A64"
+             android:layout_height="wrap_content"
              android:textColorHint="@color/timestamp"
+             android:focusable="false"
+             android:textColor="#455A64"
+             android:ems="10"
+             android:padding="16dp"
+             android:textSize="18sp"
+             android:singleLine="true"
+             android:hint="Choisir le lieu de départ"
+             android:layout_margin="5dp"
              android:layout_below="@+id/heure_arrivee"
              />
 
@@ -100,24 +106,20 @@
              android:padding="16dp"
              android:textSize="18sp"
              android:singleLine="true"
-             android:layout_below="@+id/capacite"
+             android:layout_below="@+id/rdv"
              android:hint="Donner un titre ou laisser un message ..."
              android:layout_margin="5dp" />
 
-         <EditText
-             android:id="@+id/rdv"
+         <Spinner
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:textColorHint="@color/timestamp"
+             android:layout_height="40dp"
+             android:id="@+id/capacite"
              android:textColor="#455A64"
-             android:lines="2"
-             android:ems="10"
-             android:padding="16dp"
-             android:textSize="18sp"
-             android:singleLine="true"
+             android:textColorHint="@color/timestamp"
              android:layout_below="@+id/titre"
-             android:hint="Choisir le lieu de départ..."
-             android:layout_margin="5dp" />
+             android:hint="haha"
+             />
+
 
      </RelativeLayout>
     <com.github.clans.fab.FloatingActionMenu
@@ -157,5 +159,6 @@
 
 
     </com.github.clans.fab.FloatingActionMenu>
+
 
 </RelativeLayout>

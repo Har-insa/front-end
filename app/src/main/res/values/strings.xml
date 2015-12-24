@@ -50,4 +50,5 @@
 
     <string name="app_key">T8DMGrbZh7i69YfOMg2OiJrhMEBcR02RncN8Z4TF</string>
     <string name="client_key">FFzlkrhCamOTZbSYTxM4vYYMzckuxGk0A5ZXheyN</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -2,13 +2,11 @@ package com.hardis.connect.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,8 +14,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import com.hardis.connect.R;
@@ -25,15 +21,13 @@ import com.hardis.connect.controller.AgencyController;
 import com.hardis.connect.controller.UserController;
 import com.hardis.connect.controller.VolleyCallBack;
 import com.hardis.connect.model.User;
-import com.hardis.connect.util.AllUrls;
 import com.hardis.connect.util.GlobalMethodes;
 import com.hardis.connect.util.MessageUser;
-import static com.hardis.connect.util.GlobalMethodes.isNumeric;
 
 /**
  * Created by Hassan on 11/3/2015.
  */
-public class RegisterActivity extends ActionBarActivity{
+public class RegisterActivity extends AppCompatActivity {
 
     private Button accept;
     private Button cancel;

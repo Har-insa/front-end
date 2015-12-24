@@ -13,12 +13,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -40,7 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class CreateCovoiturageOfferActivity extends ActionBarActivity {
+public class CreateCovoiturageOfferActivity extends AppCompatActivity {
 
 
     private FloatingActionButton fab_book;
@@ -58,26 +60,46 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
     private EditText rdv;
     private Calendar myCalendar = Calendar.getInstance();
     private int b;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_covoiturage_offer);
 
+        depart = (Spinner) findViewById(R.id.depart);
+        destination = (Spinner) findViewById(R.id.destination);
+
         final List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
+        final List<String> agenciesName1=AgencyController.getAgencies(getApplicationContext());
 
-        List<Integer> capacites = new ArrayList<Integer>();
-        capacites.add(1);
-        capacites.add(2);
-        capacites.add(3);
-        capacites.add(4);
-        capacites.add(5);
-        capacites.add(6);
+        agenciesName.add(0,"Sélectionnez l'agence de départ");
+        agenciesName1.add(0,"Sélectionnez l'agence de destination");
 
-        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName);
-        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        List<String> capacites = new ArrayList<String>();
+        capacites.add("Sélectionnez la capacité");
+        capacites.add("1");
+        capacites.add("2");
+        capacites.add("3");
+        capacites.add("4");
+        capacites.add("5");
+        capacites.add("6");
 
-        ArrayAdapter<Integer> capaciteAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item,capacites);
+        ArrayAdapter<String> departSpinnerAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, agenciesName);
+        departSpinnerAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        depart.setSelection(0);
+        depart.setAdapter(departSpinnerAdapterR);
+
+
+        ArrayAdapter<String> arriveeSpinnerAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName1);
+        arriveeSpinnerAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        destination.setSelection(0);
+        destination.setAdapter(arriveeSpinnerAdapterR);
+
+        ArrayAdapter<String> capaciteAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,capacites);
         capaciteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 //handle the FAB : Menu + buttons
@@ -114,17 +136,12 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
         fab_cancel.setOnClickListener(clickListener);
 
         title = (EditText)findViewById(R.id.titre);
-        //rdv = (EditText) findViewById(R.id.rdv);
+        rdv = (EditText)findViewById(R.id.rdv);
 
-        depart = (Spinner) findViewById(R.id.depart);
-        destination = (Spinner) findViewById(R.id.destination);
+
         capacite = (Spinner) findViewById(R.id.capacite);
 
-        depart.setSelection(0);
-        depart.setAdapter(dataAdapterR);
 
-        destination.setSelection(0);
-        destination.setAdapter(dataAdapterR);
 
         capacite.setAdapter(capaciteAdapter);
         capacite.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -178,15 +195,26 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
             }
         });
 
-        /*rdv.setOnClickListener(new View.OnClickListener() {
+        rdv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CreateCovoiturageOfferActivity.this,MapsActivity.class);
-                startActivity(i);
+                startActivityForResult(i,1);
             }
-        });*/
+        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode==1){
+            if(resultCode== RESULT_OK) {
+                address= data.getStringExtra("address");
+                rdv.setText(address);
+            }
+        }
+
+    }
 
     private void createAndShowAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -203,7 +231,7 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
                 String arriveeHour= heureArrivee.getText().toString();
 
 
-                if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="") {
+                if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="" || arriveeHour=="") {
                     Toast.makeText(getApplicationContext(),"Remplir tous les champs",Toast.LENGTH_LONG);
                 }
                 else {
@@ -213,8 +241,10 @@ public class CreateCovoiturageOfferActivity extends ActionBarActivity {
                     covoiturage.setTitle(title.getText().toString());
                     covoiturage.setDepartureTime(departDate + "T" + departHour + ":00");
                     covoiturage.setArrivalDate(departDate + "T" + arriveeHour + ":00");
-                    int capacity = (Integer)capacite.getSelectedItem();
+                    int capacity = Integer.valueOf(capacite.getSelectedItem().toString());
                     covoiturage.setCapacite(capacity);
+                    //covoiturage.setAddress(address);
+                    //Log.v("adr",address);
                     CovoiturageController.addTravel(covoiturage, getApplicationContext());
                     finish();
                     Intent i = new Intent(getBaseContext(), MainActivity.class);

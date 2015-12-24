@@ -28,7 +28,6 @@ public class  AgencyController {
 
     public static List<String> getAgencies(Context context) {
         final List<String> agencies = new ArrayList<String>();
-        agencies.add("Sélectionner une agence ..");
         StringRequest request = new StringRequest(Request.Method.GET, AllUrls.get_agencies_url,
                 new Response.Listener<String>() {
                     @Override

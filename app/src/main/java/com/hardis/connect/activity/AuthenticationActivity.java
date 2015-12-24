@@ -2,6 +2,7 @@ package com.hardis.connect.activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -23,7 +24,7 @@ import com.hardis.connect.util.MessageUser;
 import com.parse.ParseInstallation;
 
 
-public class AuthenticationActivity extends ActionBarActivity {
+public class AuthenticationActivity extends AppCompatActivity {
 
     private Button signIn;
     private Button signUp;
