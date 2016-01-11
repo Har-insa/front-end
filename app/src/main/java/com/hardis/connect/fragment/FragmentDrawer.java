@@ -103,7 +103,7 @@ public class FragmentDrawer extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (position != 1 && position != 6 && position != 9 && position!= 12 && position !=3 && position !=4 && position !=7 && position !=8 && position != 13) {
+                if (position == 0 || position == 2 || position == 14) {
                     drawerListener.onDrawerItemSelected(view, position);
                     mDrawerLayout.closeDrawer(containerView);
                 }
@@ -112,7 +112,7 @@ public class FragmentDrawer extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                if (position != 1 && position != 6 && position != 10 && position!= 12) {
+                if (position != 1 && position != 4 && position != 9 && position!= 12) {
                     drawerListener.onDrawerItemSelected(view, position);
                     mDrawerLayout.closeDrawer(containerView);
                 }

@@ -90,7 +90,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         return TYPE_ITEM;
     }
     private boolean isSeparator(int position){
-        return position==1 || position== 6;
+        return position==1 || position== 4;
     }
     private boolean isSimpleSeparator(int position) {
         return position == 9 || position == 12;
