@@ -98,7 +98,7 @@ public class CovoiturageOfferDetailsActivity extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CovoiturageOfferDetailsActivity.this,MessagingActivity.class));
+                //startActivity(new Intent(CovoiturageOfferDetailsActivity.this,MessagingActivity.class));
             }
         });
 

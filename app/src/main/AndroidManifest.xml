@@ -102,7 +102,7 @@
 
         <meta-data
             android:name="com.parse.push.notification_icon"
-            android:resource="@drawable/abc_btn_check_to_on_mtrl_000" />
+            android:resource="@drawable/ic_launcher" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
