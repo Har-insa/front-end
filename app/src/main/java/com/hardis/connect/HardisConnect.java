@@ -1,6 +1,7 @@
 package com.hardis.connect;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import com.hardis.connect.util.MessageUser;
 import com.parse.Parse;

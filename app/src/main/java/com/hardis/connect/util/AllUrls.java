@@ -18,6 +18,7 @@ public class AllUrls {
     //---- Gestion des covoiturages
     public static final String add_covoiturage_url=base+"travels";
     public static final String get_offres_covoiturage_url=base+"travels";
+    public static final String get_my_offres_covoiturage_url=base+"travels";
     public static final String book_offer_url=base+"requesttravels";
 
 

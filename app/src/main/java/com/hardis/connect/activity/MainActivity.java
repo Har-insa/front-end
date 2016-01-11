@@ -26,8 +26,10 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hardis.connect.R;
 import com.hardis.connect.controller.AgencyController;
+import com.hardis.connect.controller.BookingController;
 import com.hardis.connect.fragment.FragmentDrawer;
 import com.hardis.connect.model.Covoiturage;
+import com.hardis.connect.util.GlobalMethodes;
 import com.hardis.connect.util.MessageUser;
 
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().hide();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerFragment = (FragmentDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -154,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         switch (position) {
             case 0://Accueil
                 fragment = new HomeFragment();
-                //title = getString("Hardis");
+                title = "Hardis connect";
                 break;
             case 2:
                 break;

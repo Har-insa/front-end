@@ -1,5 +1,6 @@
 package com.hardis.connect.util;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.parse.ParseInstallation;
@@ -13,14 +14,6 @@ import java.util.Date;
 
 public class GlobalMethodes {
 
-    public static String username;
-    public static int id;
-    public static String fullname;
-
-    public static boolean isNumeric(char n) {
-        return (n=='0' || n=='1'|| n=='2'|| n=='3'|| n=='4'|| n=='5'|| n=='6'|| n=='7'|| n=='8'|| n=='9');
-
-    }
 
     public static final String md5(final String s) {
         final String MD5 = "MD5";
@@ -70,13 +63,6 @@ public class GlobalMethodes {
         different = different % minutesInMilli;
 
         long elapsedSeconds = different / secondsInMilli;
-
-        Log.v("elapseddays",String.valueOf(elapsedDays));
-        Log.v("elapsedHours",String.valueOf(elapsedHours));
-        Log.v("elapsedMinutes",String.valueOf(elapsedMinutes));
-        Log.v("elapsedSeconds",String.valueOf(elapsedSeconds));
-
-
         long [] result = new long[4];
 
         result[0] = elapsedDays;
@@ -94,7 +80,6 @@ public class GlobalMethodes {
             jsonObject.put("alert", content);
             jsonObject.put("title", title);
 
-            Log.v("recipientId",recipientId);
             ParsePush push = new ParsePush();
             ParseQuery query = ParseInstallation.getQuery();
             query.whereEqualTo("deviceType","android");

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hardis.connect" >
+    package="com.hardis.connect">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,16 +18,13 @@
 
     <uses-permission android:name="com.hardis.connect.permission.C2D_MESSAGE" />
 
-
     <application
         android:name=".HardisConnect"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".activity.AuthenticationActivity"
-             >
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +33,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +42,7 @@
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:label="Création d'un compte" >
+            android:label="Création d&apos;un compte">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,7 +51,7 @@
         </activity>
         <activity
             android:name=".activity.CovoiturageOfferDetailsActivity"
-            android:label="Détails de l'offre" >
+            android:label="Détails de l&apos;offre">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,7 +61,7 @@
         <activity
             android:name=".activity.CreateCovoiturageOfferActivity"
             android:label="Nouvelle offre"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,7 +71,7 @@
 
         <service android:name="com.parse.PushService" />
 
-        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -82,7 +79,7 @@
         </receiver>
         <receiver
             android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.DELETE" />
@@ -91,7 +88,7 @@
         </receiver>
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -117,14 +114,13 @@
 
         <activity
             android:name=".activity.MapsActivity"
-            android:label="Choisir le lieu de départ"
-            >
-        </activity>
-        <service android:name=".util.MessageService"></service>
-        <activity android:name=".activity.MessagingActivity">
-        </activity>
+            android:label="Choisir le lieu de départ"></activity>
 
+        <service android:name=".util.MessageService" />
 
+        <activity android:name=".activity.MessagingActivity"></activity>
+        <activity android:name=".activity.MyOffers"
+            android:label="Mes offres"></activity>
     </application>
 
 </manifest>

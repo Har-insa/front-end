@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.hardis.connect.HardisConnect;
 import com.hardis.connect.model.Covoiturage;
 import com.hardis.connect.util.AllUrls;
 import com.hardis.connect.util.GlobalMethodes;
@@ -37,6 +38,7 @@ import java.util.Map;
 public class CovoiturageController {
 
     final static private List<Covoiturage> covoiturages = new ArrayList<>();
+    final static private List<Covoiturage> mesOffres = new ArrayList<>();
 
     public static List<Covoiturage> getOffresCovoiturage(final Context context, final VolleyCallBack callBack) {
         covoiturages.clear();
@@ -49,16 +51,10 @@ public class CovoiturageController {
                             Log.v("response",response);
                             for(int i=0;i<data.length();i++) {
                                 int id = data.getJSONObject(i).getInt("Id");
-                                Log.v("idCovoiturage",String.valueOf(id));
                                 int capacity = data.getJSONObject(i).getInt("Capacity");
                                 String username = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("FirstName")+
                                         " "+data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
                                 String email = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Email");
-                                Log.v("username",GlobalMethodes.username);
-                                if(email.compareTo(GlobalMethodes.username) == -1) {
-                                    GlobalMethodes.id=data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getInt("Id");
-                                    GlobalMethodes.fullname=username;
-                                }
                                 String title = data.getJSONObject(i).getJSONObject("Publication").getString("Title");
                                 String dateCreation = data.getJSONObject(i).getJSONObject("Publication").getString("DateTimeCreation");
                                 String departureAgency=data.getJSONObject(i).getJSONObject("DepartureAgency").getString("Name");
@@ -173,5 +169,77 @@ public class CovoiturageController {
         return covoiturages;
     }
 
+    public static List<Covoiturage> getMyOffers(final Context context, final VolleyCallBack callBack) {
+        StringRequest request = new StringRequest(Request.Method.GET, AllUrls.get_my_offres_covoiturage_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray data = new JSONArray(response);
+                            Log.v("getMyOffers",response);
+                            for(int i=0;i<data.length();i++) {
+                                int id = data.getJSONObject(i).getInt("Id");
+                                int capacity = data.getJSONObject(i).getInt("Capacity");
+                                String username = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("FirstName")+
+                                        " "+data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
+                                String email = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Email");
+                                String title = data.getJSONObject(i).getJSONObject("Publication").getString("Title");
+                                String dateCreation = data.getJSONObject(i).getJSONObject("Publication").getString("DateTimeCreation");
+                                String departureAgency=data.getJSONObject(i).getJSONObject("DepartureAgency").getString("Name");
+                                String arrivalAgency=data.getJSONObject(i).getJSONObject("ArrivalAgency").getString("Name");
+                                String departureDate= data.getJSONObject(i).getString("DepartureTime");
+                                String arrivalDate = data.getJSONObject(i).getString("ArrivalTime");
+                                Covoiturage covoiturage=new Covoiturage();
+                                covoiturage.setId(id);
+                                covoiturage.setEmail(email);
+                                covoiturage.setCapacite(capacity);
+                                covoiturage.setDepartureAgencyName(departureAgency);
+                                covoiturage.setArrivalAgencyName(arrivalAgency);
+                                covoiturage.setDepartureTime(departureDate);
+                                covoiturage.setArrivalDate(arrivalDate);
+                                covoiturage.setUserName(username);
+                                covoiturage.setTitle(title);
+                                covoiturage.setDateCreation(dateCreation);
+                                mesOffres.add(covoiturage);
+                            }
+                            callBack.onSuccess("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Response", error.getMessage());
+            }
+        }
+        )
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+                String token =pref.getString("token",null);
+                params.put("Authorization", token);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getParams()  {
+                Map<String, String> params = new HashMap<String, String>();
+                SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+                int id =pref.getInt("id",0);
+                params.put("id_user", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestController.getInstance(context).addToRequestQueue(request);
+        return mesOffres;
+    }
+
+    public static List<Covoiturage> getMesOffres() {
+        return mesOffres;
+    }
 }
 

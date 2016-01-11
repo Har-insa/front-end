@@ -124,7 +124,7 @@ public class CovoiturageOfferDetailsActivity extends AppCompatActivity {
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //TODO
-                BookingController.bookTravel(covoiturage.getId(),GlobalMethodes.id,covoiturage.getEmail(),getApplicationContext());
+                BookingController.bookTravel(covoiturage.getId(),covoiturage.getEmail(),getApplicationContext());
                 dialog.dismiss();
                 finish();
                 Intent i = new Intent(getBaseContext(), MainActivity.class);

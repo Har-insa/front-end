@@ -25,9 +25,15 @@ import java.util.Map;
  */
 public class BookingController {
 
-    public static void bookTravel(int idTravel,int idUser,final String owner,final Context context) {
+    public static void bookTravel(int idTravel,final String owner,final Context context) {
         JsonObjectRequest request = null;
         try {
+            SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+            int idUser  =pref.getInt("id", 0);
+            Log.v("Hoang",String.valueOf(idUser));
+            final String fullName = pref.getString("fullName", null);
+            Log.v("Hoang",fullName);
+
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("IdTravel",idTravel);
             jsonObj.put("IdUser",idUser);
@@ -36,7 +42,8 @@ public class BookingController {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            GlobalMethodes.sendNotification("Réservation",GlobalMethodes.fullname+" veut réserver une place",owner);
+                            Log.v("owner",owner);
+                            GlobalMethodes.sendNotification("Réservation",fullName+" veut réserver une place",owner);
                         }
                     },
                     new Response.ErrorListener() {
@@ -60,6 +67,47 @@ public class BookingController {
         catch(JSONException e)
         {
         }
+        RequestController.getInstance(context).addToRequestQueue(request);
+    }
+
+
+
+    public static void waitingBooking(final int idUser,final Context context) {
+
+        JsonObjectRequest request = null;
+
+            request = new JsonObjectRequest(Request.Method.GET, AllUrls.book_offer_url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.v("waiting",response.toString());
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyLog.d("Response", error.getMessage());
+                        }
+                    }
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+                    String token =pref.getString("token",null);
+                    params.put("Authorization", token);
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("id_user",String.valueOf(1));
+                    return params;
+                }
+            };
+
         RequestController.getInstance(context).addToRequestQueue(request);
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
@@ -52,7 +53,8 @@ public class MessagingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         recipientId = intent.getStringExtra("RECIPIENT_ID");
-        currentUserId = GlobalMethodes.username;
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("Hardis", 0);
+        String userName  =pref.getString("userName",null);
 
         messagesList = (ListView) findViewById(R.id.listMessages);
         messageAdapter = new MessageAdapter(this);

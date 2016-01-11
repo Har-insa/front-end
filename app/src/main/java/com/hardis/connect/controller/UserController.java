@@ -79,6 +79,9 @@ public class UserController {
                             SharedPreferences.Editor editor = pref.edit();
                             try {
                                 editor.putString("token", response.getString("token"));
+                                editor.putInt("id", response.getJSONObject("userInfo").getInt("Id"));
+                                editor.putString("userName", response.getJSONObject("userInfo").getString("Email"));
+                                editor.putString("fullName",response.getJSONObject("userInfo").getString("FirstName")+" " +response.getJSONObject("userInfo").getString("Lastname"));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

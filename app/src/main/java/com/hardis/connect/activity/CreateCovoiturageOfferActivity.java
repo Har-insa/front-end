@@ -30,10 +30,13 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.hardis.connect.HardisConnect;
 import com.hardis.connect.R;
 import com.hardis.connect.controller.AgencyController;
+import com.hardis.connect.controller.BookingController;
 import com.hardis.connect.controller.CovoiturageController;
 import com.hardis.connect.model.Covoiturage;
+import com.hardis.connect.util.GlobalMethodes;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,6 +69,8 @@ public class CreateCovoiturageOfferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_covoiturage_offer);
+
+        //BookingController.waitingBooking(getApplicationContext());
 
         depart = (Spinner) findViewById(R.id.depart);
         destination = (Spinner) findViewById(R.id.destination);
