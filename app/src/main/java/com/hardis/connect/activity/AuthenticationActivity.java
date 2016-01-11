@@ -41,6 +41,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
 
             setContentView(R.layout.activity_authentication);
+            getSupportActionBar().hide();
 
             signIn = (Button) findViewById(R.id.buttonLogin);
             signUp = (Button) findViewById(R.id.buttonRegister);

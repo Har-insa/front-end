@@ -55,6 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().hide();
+
         textView = (TextView) findViewById(R.id.label);
         accept = (Button) findViewById(R.id.button_validate);
         cancel = (Button) findViewById(R.id.button_cancel);
@@ -73,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
         agencies.setAdapter(dataAdapterR);
 
 
-        textView.setText(Html.fromHtml("<font color=#3399cc>Sign</font> <font color=#ffffff>Up</font>"));
+        textView.setText(Html.fromHtml("<font color=#3399cc>Inscription</font>"));
 
         accept.setOnClickListener(new View.OnClickListener() {
 
