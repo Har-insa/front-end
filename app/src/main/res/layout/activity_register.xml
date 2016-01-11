@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textSize="45dp"
-            android:text="Sing Up"
+            android:text="Inscription"
             android:textStyle="bold"
             android:layout_gravity="center">
             <requestFocus />
@@ -64,7 +64,7 @@
                         android:textColorHint="@color/hardis"
                         android:ems="10"
                         android:singleLine="true"
-                        android:hint="First Name"
+                        android:hint="Prénom"
                         android:inputType="textPersonName"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "/>
 
@@ -79,7 +79,7 @@
                         android:textColorHint="@color/hardis"
                         android:ems="10"
                         android:singleLine="true"
-                        android:hint="Last Name "
+                        android:hint="Nom"
                         android:inputType="textPersonName"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
                         />
@@ -92,7 +92,7 @@
                         android:textColorHint="@color/hardis"
                         android:ems="10"
                         android:singleLine="true"
-                        android:hint="User Name"
+                        android:hint="Pseudo"
                         android:inputType="textPersonName"
                         android:digits="_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"/>
 
@@ -104,7 +104,7 @@
                         android:ems="10"
                         android:singleLine="true"
                         android:textColorHint="@color/hardis"
-                        android:hint="Password"
+                        android:hint="Mot de passe"
                         android:inputType="textPassword" >
 
                     </EditText>
@@ -116,7 +116,7 @@
                         android:textColorHint="@color/hardis"
                         android:ems="10"
                         android:singleLine="true"
-                        android:hint="Confirm Password"
+                        android:hint="Confirmation mot de passe"
                         android:inputType="textPassword"
                         android:layout_margin="5dp" />
 
@@ -154,7 +154,7 @@
                         android:layout_margin="4dp"
                         android:paddingBottom="10dp"
                         android:paddingTop="3dp"
-                        android:text="Sign Up"
+                        android:text="S'inscrire"
                         android:background="@color/hardis"
                         android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 
@@ -168,7 +168,7 @@
                         android:background="@color/orange"
                         android:paddingBottom="10dp"
                         android:paddingTop="3dp"
-                        android:text="Cancel"
+                        android:text="Annuler"
                         android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 
                 </RelativeLayout>

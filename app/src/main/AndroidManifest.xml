@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.AuthenticationActivity"
-            android:label="Authentification" >
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -120,6 +120,11 @@
             android:label="Choisir le lieu de départ"
             >
         </activity>
+        <service android:name=".util.MessageService"></service>
+        <activity android:name=".activity.MessagingActivity">
+        </activity>
+
+
     </application>
 
 </manifest>

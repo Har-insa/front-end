@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="Username"
+                android:hint="Pseudo"
                 android:textColorHint="@color/hardis"
                 android:textColor="@color/navigationBarColor"
                 android:ems="10"
@@ -63,7 +63,7 @@
                 android:textColorHint="@color/hardis"
                 android:textColor="@color/navigationBarColor"
                 android:id="@+id/editTextPassword"
-                android:hint="Password"
+                android:hint="Mot de passe"
                 android:layout_marginTop="20dp"
                 android:layout_below="@+id/editTextId"
                 android:layout_alignLeft="@+id/editTextId"
@@ -76,7 +76,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Forgot your password ?"
+                android:text="Mot de passe oublié?"
                 android:id="@+id/textView"
                 android:layout_gravity="right"
                 android:layout_marginTop="8dp" />
@@ -98,7 +98,7 @@
                 android:layout_margin="4dp"
                 android:paddingBottom="10dp"
                 android:paddingTop="3dp"
-                android:text="Sign In"
+                android:text="Connexion"
                 android:background="@color/hardis"
                 android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 
@@ -112,7 +112,7 @@
                 android:background="@color/orange"
                 android:paddingBottom="10dp"
                 android:paddingTop="3dp"
-                android:text="Sign Up"
+                android:text="Inscription"
                 android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 
         </RelativeLayout>

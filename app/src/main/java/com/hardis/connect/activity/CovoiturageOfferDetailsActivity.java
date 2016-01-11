@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -43,6 +44,7 @@ public class CovoiturageOfferDetailsActivity extends AppCompatActivity {
     private TextView arriveeDate;
     private TextView capacite;
     private TextView timeStamp;
+    private Button chat;
 
     private Covoiturage covoiturage;
 
@@ -92,6 +94,13 @@ public class CovoiturageOfferDetailsActivity extends AppCompatActivity {
         capacite = (TextView) findViewById(R.id.dispo_value);
         departDate = (TextView) findViewById(R.id.date_value);
         arriveeDate = (TextView) findViewById(R.id.datearrivee_value);
+        chat = (Button) findViewById(R.id.button2);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CovoiturageOfferDetailsActivity.this,MessagingActivity.class));
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         if(bundle== null) return;

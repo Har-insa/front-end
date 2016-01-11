@@ -49,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(mToolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerFragment = (FragmentDrawer)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
             switch (v.getId()) {
                 case R.id.fab1:
-                    //createNewOffer();
                     startActivity(new Intent(MainActivity.this, CreateCovoiturageOfferActivity.class));
                     menu1.close(true);
                     break;
@@ -117,68 +115,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         }
     };
-
-    private void createNewOffer() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-
-        View view = getLayoutInflater().inflate(R.layout.offre_covoiturage, null);
-        final Spinner depart = (Spinner)view.findViewById(R.id.depart);
-        final Spinner destination = (Spinner)view.findViewById(R.id.destination);
-        Button create = (Button)view.findViewById(R.id.create);
-        final DatePicker datePicker = (DatePicker)view.findViewById(R.id.datePicker);
-        final TimePicker timePicker = (TimePicker)view.findViewById(R.id.timePicker);
-
-        ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, AgencyController.getAgencies(getApplicationContext()));
-        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        depart.setAdapter(dataAdapterR);
-        destination.setAdapter(dataAdapterR);
-
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int departureAgencyId = AgencyController.getAgencyByName(depart.getSelectedItemPosition());
-                int destinationAgencyId = AgencyController.getAgencyByName(destination.getSelectedItemPosition());
-
-                int year = datePicker.getYear();
-                int month = datePicker.getMonth();
-                int day = datePicker.getDayOfMonth();
-                int hour = timePicker.getCurrentHour();
-                int minute = timePicker.getCurrentMinute();
-
-                String departureDate = String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day) + "T"
-                        + String.valueOf(hour) + ":" + String.valueOf(minute) + ":00";
-
-                Log.v("departuredate", departureDate);
-
-                if (departureAgencyId == -1 || destinationAgencyId == -1) {
-                    Toast.makeText(MainActivity.this, MessageUser.get("1106"), Toast.LENGTH_SHORT).show();
-                } else {
-                    Covoiturage covoiturage = new Covoiturage();
-                    covoiturage.setDepartureAgency(departureAgencyId);
-                    covoiturage.setArrivalAgency(destinationAgencyId);
-                    covoiturage.setDepartureTime(departureDate);
-                    /*CovoiturageController.createCovoiturage(covoiturage, getApplicationContext(), new VolleyCallBack() {
-                        @Override
-                        public void onSuccess(String result) {
-
-                            Log.v("create", "succ");
-                        }
-
-                        @Override
-                        public void onFailed(String result) {
-                            Log.v("create", "failed");
-                        }
-                    });*/
-
-                }
-            }
-        });
-
-
-        dialog.setView(view).create();
-        dialog.show();
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

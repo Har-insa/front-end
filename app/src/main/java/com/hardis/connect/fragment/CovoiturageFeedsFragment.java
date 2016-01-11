@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -32,11 +33,14 @@ import com.hardis.connect.model.NavDrawerItem;
 import com.hardis.connect.util.GlobalMethodes;
 
 import java.net.ConnectException;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class CovoiturageFeedsFragment extends Fragment {
@@ -66,8 +70,23 @@ public class CovoiturageFeedsFragment extends Fragment {
                     covoiturages.get(i).setTimeStamp(timeStamp);
                     offreItem.setTimeStamp(timeStamp);
                     offreItem.setTrajet(covoiturages.get(i).getDepartureAgencyName() + " >> " + covoiturages.get(i).getArrivalAgencyName());
-                    offreItem.setDate(covoiturages.get(i).getDepartureTime().replace("T", " "));
                     offreItem.setCapacite(covoiturages.get(i).getCapacite() + " place(s) disponible(s)");
+
+                    String depart = covoiturages.get(i).getDepartureTime().replace("T"," ");
+                    String arrivee = covoiturages.get(i).getArrivalDate().replace("T"," ");
+                    java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRENCH);
+                    try {
+                        Date dep =  df.parse(depart);
+                        Date arr = df.parse(arrivee);
+                        Format formatter = new SimpleDateFormat("EEEE, dd MMMM yyyy, HH:mm");
+                        String departOutput=formatter.format(dep);
+                        String arriveeOutput=formatter.format(arr);
+                        offreItem.setDate(departOutput);
+                        covoiturages.get(i).setDepartureTime(departOutput);
+                        covoiturages.get(i).setArrivalDate(arriveeOutput);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
                     offreItem.setImgResID(imgs.getResourceId(k, 1));
                     k++;
@@ -92,17 +111,13 @@ public class CovoiturageFeedsFragment extends Fragment {
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Log.v("datecreation",dateCreation);
         Date date1=null,date2=null;
         String timeStamp="";
 
         try {
             dateCreation = dateCreation.replace("T"," ");
-            Log.v("datecreationnew",dateCreation);
             date1 = simpleDateFormat.parse(dateCreation);
-            Log.v("date1", date1.toString());
             date2 = new Date();
-            Log.v("date2",date2.toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -144,7 +159,6 @@ public class CovoiturageFeedsFragment extends Fragment {
         }
         if(data!=null)
         {
-            Log.v("size","remove data");
             data.removeAll(data);
         }
         return inflater.inflate(R.layout.covoiturage_search_recyclerview, container, false);

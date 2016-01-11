@@ -60,13 +60,13 @@ public class AuthenticationActivity extends AppCompatActivity {
                         else {
                             hashedPass = GlobalMethodes.md5(pwd);
                             User user = new User(login,hashedPass);
-
+                            GlobalMethodes.username=login;
+                            Log.v("username1",GlobalMethodes.username);
                             UserController.authenticateUser(getApplicationContext(), user, new VolleyCallBack() {
                                 @Override
                                 public void onSuccess(String result) {
-                                    GlobalMethodes.username=login;
                                     ParseInstallation parseInstallation =ParseInstallation.getCurrentInstallation();
-                                    parseInstallation.put("userName",GlobalMethodes.username);
+                                    parseInstallation.put("userName",login);
                                     parseInstallation.saveInBackground();
 
                                     Intent i = new Intent(getBaseContext(), MainActivity.class);

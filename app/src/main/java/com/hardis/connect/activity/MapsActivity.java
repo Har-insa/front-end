@@ -37,7 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private SearchView search;
     private Button apply;
-    private String address;
+    private String address="";
     private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,23 +83,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-                builder.setMessage("Voulez vous choisir "+address+" comme lieu de départ?");
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra("address", address);
-                        setResult(Activity.RESULT_OK, returnIntent);
-                        finish();
-                    }
-                });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                if (address.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Veuillez choisir une addresse", Toast.LENGTH_LONG);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                    builder.setMessage("Voulez vous choisir " + address + " comme lieu de départ?");
+                    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra("address", address);
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            finish();
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
         });
         }

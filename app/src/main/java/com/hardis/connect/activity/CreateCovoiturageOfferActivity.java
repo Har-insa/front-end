@@ -231,7 +231,7 @@ public class CreateCovoiturageOfferActivity extends AppCompatActivity {
                 String arriveeHour= heureArrivee.getText().toString();
 
 
-                if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="" || arriveeHour=="") {
+                if(departAgency == -1 || destinationAgency == -1 || departDate =="" || departHour=="" || arriveeHour=="" || address=="") {
                     Toast.makeText(getApplicationContext(),"Remplir tous les champs",Toast.LENGTH_LONG);
                 }
                 else {

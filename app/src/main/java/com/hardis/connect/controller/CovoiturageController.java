@@ -54,6 +54,7 @@ public class CovoiturageController {
                                 String username = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("FirstName")+
                                         " "+data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Lastname");
                                 String email = data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getString("Email");
+                                Log.v("username",GlobalMethodes.username);
                                 if(email.compareTo(GlobalMethodes.username) == -1) {
                                     GlobalMethodes.id=data.getJSONObject(i).getJSONObject("Publication").getJSONObject("User").getInt("Id");
                                     GlobalMethodes.fullname=username;
