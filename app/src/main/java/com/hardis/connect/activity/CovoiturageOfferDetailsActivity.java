@@ -95,12 +95,12 @@ public class CovoiturageOfferDetailsActivity extends AppCompatActivity {
         departDate = (TextView) findViewById(R.id.date_value);
         arriveeDate = (TextView) findViewById(R.id.datearrivee_value);
         chat = (Button) findViewById(R.id.button2);
-        chat.setOnClickListener(new View.OnClickListener() {
+       /* chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(CovoiturageOfferDetailsActivity.this,MessagingActivity.class));
             }
-        });
+        });*/
 
         Bundle bundle = getIntent().getExtras();
         if(bundle== null) return;
