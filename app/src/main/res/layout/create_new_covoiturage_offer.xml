@@ -32,8 +32,6 @@
          android:layout_below="@id/header"
          android:id="@+id/relativeLayout">
 
-
-
          <EditText
              android:id="@+id/date_depart"
              android:layout_width="match_parent"
@@ -46,7 +44,7 @@
              android:textSize="18sp"
              android:singleLine="true"
              android:hint="Date de départ"
-             android:layout_margin="5dp" />
+             android:layout_margin="3dp" />
 
          <EditText
              android:id="@+id/heure_depart"
@@ -61,7 +59,7 @@
              android:singleLine="true"
              android:layout_below="@+id/date_depart"
              android:hint="Heure de départ"
-             android:layout_margin="5dp" />
+             android:layout_margin="3dp" />
 
          <EditText
              android:id="@+id/heure_arrivee"
@@ -76,7 +74,7 @@
              android:singleLine="true"
              android:layout_below="@+id/heure_depart"
              android:hint="Heure d'arrivée"
-             android:layout_margin="5dp" />
+             android:layout_margin="3dp" />
 
 
          <EditText
@@ -91,7 +89,7 @@
              android:textSize="18sp"
              android:singleLine="true"
              android:hint="Choisir le lieu de départ"
-             android:layout_margin="5dp"
+             android:layout_margin="3dp"
              android:layout_below="@+id/heure_arrivee"
              />
 
@@ -104,11 +102,11 @@
              android:lines="2"
              android:ems="10"
              android:padding="16dp"
-             android:textSize="18sp"
+             android:textSize="16sp"
              android:singleLine="true"
              android:layout_below="@+id/rdv"
              android:hint="Donner un titre ou laisser un message ..."
-             android:layout_margin="5dp" />
+             android:layout_margin="3dp" />
 
          <Spinner
              android:layout_width="match_parent"
@@ -119,8 +117,6 @@
              android:layout_below="@+id/titre"
              android:hint="haha"
              />
-
-
      </RelativeLayout>
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_book"
@@ -157,8 +153,6 @@
             fab:fab_size="mini"
             fab:fab_label="Créer" />
 
-
     </com.github.clans.fab.FloatingActionMenu>
-
 
 </RelativeLayout>

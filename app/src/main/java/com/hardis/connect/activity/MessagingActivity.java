@@ -49,12 +49,10 @@ public class MessagingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messaging);
 
-        bindService(new Intent(this, MessageService.class), serviceConnection, BIND_AUTO_CREATE);
+        //bindService(new Intent(this, MessageService.class), serviceConnection, BIND_AUTO_CREATE);
 
-        Intent intent = getIntent();
-        recipientId = intent.getStringExtra("RECIPIENT_ID");
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("Hardis", 0);
-        String userName  =pref.getString("userName",null);
+        currentUserId=getApplicationContext().getSharedPreferences("Hardis",0).getString("userName", null);
+        recipientId = "toto";
 
         messagesList = (ListView) findViewById(R.id.listMessages);
         messageAdapter = new MessageAdapter(this);

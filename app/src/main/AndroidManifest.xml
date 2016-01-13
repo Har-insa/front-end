@@ -118,9 +118,10 @@
 
         <service android:name=".util.MessageService" />
 
-        <activity android:name=".activity.MessagingActivity"></activity>
-        <activity android:name=".activity.MyOffers"
-            android:label="Mes offres"></activity>
+        <activity android:name=".activity.MessagingActivity"
+            android:label="Messagerie"></activity>
+        <activity android:name=".activity.PendingRequests"
+            android:label="Demandes en attente"></activity>
     </application>
 
 </manifest>

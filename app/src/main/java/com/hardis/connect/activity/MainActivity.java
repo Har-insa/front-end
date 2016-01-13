@@ -1,6 +1,5 @@
 package com.hardis.connect.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 
 import android.os.Handler;
@@ -11,26 +10,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hardis.connect.R;
-import com.hardis.connect.controller.AgencyController;
-import com.hardis.connect.controller.BookingController;
 import com.hardis.connect.fragment.FragmentDrawer;
-import com.hardis.connect.model.Covoiturage;
-import com.hardis.connect.util.GlobalMethodes;
-import com.hardis.connect.util.MessageUser;
+import com.hardis.connect.util.MessageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().hide();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         displayView(0);
-
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -162,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = "Hardis connect";
                 break;
             case 2:
+                startActivity(new Intent(MainActivity.this, PendingRequests.class));
                 break;
             case 3:
 

@@ -69,21 +69,22 @@ public class CovoiturageFeedsFragment extends Fragment {
                     String timeStamp=calculateTimeStamp(covoiturages.get(i).getDateCreation());
                     covoiturages.get(i).setTimeStamp(timeStamp);
                     offreItem.setTimeStamp(timeStamp);
-                    offreItem.setTrajet(covoiturages.get(i).getDepartureAgencyName() + " >> " + covoiturages.get(i).getArrivalAgencyName());
+                    offreItem.setTrajet(covoiturages.get(i).getArrivalAgencyName() + " >> " + covoiturages.get(i).getDepartureAgencyName());
                     offreItem.setCapacite(covoiturages.get(i).getCapacite() + " place(s) disponible(s)");
-
                     String depart = covoiturages.get(i).getDepartureTime().replace("T"," ");
                     String arrivee = covoiturages.get(i).getArrivalDate().replace("T"," ");
                     java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRENCH);
                     try {
                         Date dep =  df.parse(depart);
                         Date arr = df.parse(arrivee);
-                        Format formatter = new SimpleDateFormat("EEEE, dd MMMM yyyy, HH:mm");
-                        String departOutput=formatter.format(dep);
-                        String arriveeOutput=formatter.format(arr);
+                        Format formatterdepart1 = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+                        Format formatterdepart2 = new SimpleDateFormat("HH:mm");
+                        Format formatterarrivee = new SimpleDateFormat("HH:mm");
+                        String departOutput=formatterdepart1.format(dep);
+                        String departOutput1=formatterdepart2.format(dep);
+                        String arriveeOutput=formatterarrivee.format(arr);
                         offreItem.setDate(departOutput);
-                        covoiturages.get(i).setDepartureTime(departOutput);
-                        covoiturages.get(i).setArrivalDate(arriveeOutput);
+                        offreItem.setTime(departOutput1+"-"+arriveeOutput);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -95,7 +96,6 @@ public class CovoiturageFeedsFragment extends Fragment {
                     }
                     data.add(offreItem);
                 }
-                Log.v("size",String.valueOf(data.size()));
                 mAdapter.notifyDataSetChanged();
                 mRecyclerView.setAdapter(mAdapter);
             }

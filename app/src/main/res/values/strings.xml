@@ -13,14 +13,14 @@
 
 
     <string name="nav_item_home">Accueil</string>
-    <string name="nav_item_restaurant">Evenements</string>
-    <string name="nav_item_commander">Cinéma</string>
-    <string name="nav_item_carte">Musique</string>
-    <string name="nav_item_liste">Sport</string>
+    <string name="nav_item_restaurant">Services</string>
+    <string name="nav_item_commander">Mes offres</string>
+    <string name="nav_item_carte">Gestion de frais</string>
+    <string name="nav_item_liste">Evenements</string>
     <string name="nav_item_a_proximite">Restaurant</string>
     <string name="nav_item_services">Services</string>
-    <string name="nav_item_cinema">Co-voiturage</string>
-    <string name="nav_item_actualites">Mes offres</string>
+    <string name="nav_item_cinema">Cinéma</string>
+    <string name="nav_item_actualites">Musique</string>
     <string name="nav_item_se_deconnecter">Se Deconnecter</string>
     <string name="nav_item_mon_compte">Mon Compte</string>
     <string name="nav_item_conitions_generales">Conditions Générales</string>
@@ -51,4 +51,7 @@
     <string name="app_key">T8DMGrbZh7i69YfOMg2OiJrhMEBcR02RncN8Z4TF</string>
     <string name="client_key">FFzlkrhCamOTZbSYTxM4vYYMzckuxGk0A5ZXheyN</string>
     <string name="title_activity_maps">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -12,6 +12,8 @@ import com.hardis.connect.R;
 import com.hardis.connect.model.CovoiturageOffreItem;
 import com.hardis.connect.model.NavDrawerItem;
 
+import org.w3c.dom.Text;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +44,8 @@ public class CovoiturageFeedsFragmentAdapter extends RecyclerView.Adapter<Covoit
         holder.img.setImageResource(current.getImgResID());
         holder.userName.setText(current.getUserName());;
         holder.timeStamp.setText(current.getTimeStamp());;
-        holder.date.setText(current.getDate());;
+        holder.date.setText(current.getDate());
+        holder.time.setText(current.getTime());
         holder.trajet.setText(current.getTrajet());;
         holder.capcite.setText(current.getCapacite());;
     }
@@ -61,6 +64,7 @@ public class CovoiturageFeedsFragmentAdapter extends RecyclerView.Adapter<Covoit
         TextView timeStamp;
         ImageView img;
         TextView date;
+        TextView time;
         TextView trajet;
         TextView capcite;
 
@@ -71,6 +75,7 @@ public class CovoiturageFeedsFragmentAdapter extends RecyclerView.Adapter<Covoit
                 img = (ImageView) itemView.findViewById(R.id.profilePic);
                 timeStamp = (TextView) itemView.findViewById(R.id.timeStamp);
                 date =  (TextView) itemView.findViewById(R.id.date);
+                time=   (TextView) itemView.findViewById(R.id.time);
                 trajet =  (TextView) itemView.findViewById(R.id.trajet);
                 capcite = (TextView) itemView.findViewById(R.id.capacite);
         }

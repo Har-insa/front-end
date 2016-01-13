@@ -14,12 +14,17 @@ public class AllUrls {
     //---- Gestion des utilisateurs
     public static final String add_user_url=base+"register";
     public static final String authenticate_user_url=base+"login";
+    public static final String get_user_url=base+"users";
+
 
     //---- Gestion des covoiturages
     public static final String add_covoiturage_url=base+"travels";
     public static final String get_offres_covoiturage_url=base+"travels";
     public static final String get_my_offres_covoiturage_url=base+"travels";
     public static final String book_offer_url=base+"requesttravels";
+    public static final String get_pending_requests_url=base+"requesttravels";
+    public static final String accept_request_requests_url=base+"requesttravels";
+
 
 
 

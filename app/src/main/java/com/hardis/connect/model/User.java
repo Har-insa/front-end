@@ -9,6 +9,7 @@ public class User {
     private String email;
     private String password;
     private int agencyId;
+    private int requestId;
 
     public User(String firstName, String lastname, String email, String password,int agencyId) {
         this.firstName = firstName;
@@ -23,6 +24,12 @@ public class User {
         this.password = password;
     }
 
+    public User(String firstName, String lastname,String email,int requestId) {
+        this.firstName = firstName;
+        this.lastname = lastname;
+        this.email=email;
+        this.requestId=requestId;
+    }
     public String getFirstName() {
         return firstName;
     }
@@ -41,5 +48,9 @@ public class User {
 
     public int getAgencyId() {
         return agencyId;
+    }
+
+    public int getRequestId() {
+        return requestId;
     }
 }

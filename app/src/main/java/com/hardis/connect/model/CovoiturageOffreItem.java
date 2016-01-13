@@ -7,6 +7,7 @@ public class CovoiturageOffreItem  {
     private String timeStamp;
     private String trajet;
     private String date;
+    private String time;
     private String capacite;
 
 
@@ -14,12 +15,13 @@ public class CovoiturageOffreItem  {
 
     }
 
-    public CovoiturageOffreItem(String userName, int imgResID, String timeStamp, String trajet, String date, String capacite) {
+    public CovoiturageOffreItem(String userName, int imgResID, String timeStamp, String trajet, String date,String time,String capacite) {
         this.userName = userName;
         this.imgResID = imgResID;
         this.timeStamp = timeStamp;
         this.trajet = trajet;
         this.date = date;
+        this.time=time;
         this.capacite = capacite;
     }
 
@@ -61,6 +63,14 @@ public class CovoiturageOffreItem  {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getCapacite() {

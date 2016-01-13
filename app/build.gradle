@@ -27,14 +27,18 @@ dependencies {
     compile('com.github.florent37:materialviewpager:1.0.3.2@aar') {
         transitive = true
     }
-    compile files('src/main/java/com/hardis/connect/libs/Parse-1.9.1.jar')
-    compile files('src/main/java/com/hardis/connect/libs/bolts-android-1.2.0.jar')
+    compile 'com.parse.bolts:bolts-tasks:1.3.0'
+    compile 'com.parse:parse-android:1.12.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.jpardogo.materialtabstrip:library:1.0.0'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.getbase:floatingactionbutton:1.9.0'
     compile 'com.github.clans:fab:1.6.2'
     compile 'com.google.android.gms:play-services:8.4.0'
-    compile files('src/main/java/com/hardis/connect/libs/sinch-android-rtc-3.6.2.jar')
+    compile 'com.android.support:support-v4:23.1.1'
+    compile files('libs/sinch-android-rtc-3.7.1.jar')
+    compile files('libs/Parse-1.6.0.jar')
+    compile files('libs/sinch-android-rtc-3.6.2.jar')
+    compile files('libs/volley.jar')
 }

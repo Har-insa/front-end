@@ -67,7 +67,7 @@
                     android:id="@+id/read_more"
                     android:layout_below="@+id/capacite"
                     android:background="@color/cyan"
-                    android:text="Voir les demandes en attente"
+                    android:text="Discuter"
                     android:layout_centerInParent="true"/>
 
             </RelativeLayout>

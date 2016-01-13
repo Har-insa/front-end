@@ -1,109 +1,137 @@
 package com.hardis.connect.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
+import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.hardis.connect.R;
+import com.hardis.connect.activity.MessagingActivity;
+import com.hardis.connect.activity.PendingRequests;
+import com.hardis.connect.adapter.MyBookingsFeedsFragmentAdapter;
+import com.hardis.connect.adapter.MyOffersFeedsFragmentAdapter;
+import com.hardis.connect.controller.CovoiturageController;
+import com.hardis.connect.controller.VolleyCallBack;
+import com.hardis.connect.model.Covoiturage;
+import com.hardis.connect.model.CovoiturageOffreItem;
+import com.hardis.connect.util.MessageService;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MyBookingFeedsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MyBookingFeedsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 public class MyBookingFeedsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private List<CovoiturageOffreItem> data = new ArrayList<>();
+    private List<Covoiturage> covoiturages;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
-
-    public MyBookingFeedsFragment() {
-        // Required empty public constructor
+    public static MyBookingFeedsFragment newInstance() {
+        return new MyBookingFeedsFragment();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyBookingFeedsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyBookingFeedsFragment newInstance(String param1, String param2) {
-        MyBookingFeedsFragment fragment = new MyBookingFeedsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public void getData() {
+        CovoiturageController.getMyBookings(getActivity().getApplicationContext(), new VolleyCallBack() {
+            @Override
+            public void onSuccess(String result) {
+                covoiturages = CovoiturageController.getMesReservations();
+                for (int i = 0; i < covoiturages.size(); i++) {
+                    Covoiturage covoiturage = CovoiturageController.getCovoiturageById(covoiturages.get(i).getId());
+                    if (covoiturage != null) {
+                        CovoiturageOffreItem offreItem = new CovoiturageOffreItem();
+                        offreItem.setTrajet(covoiturage.getArrivalAgencyName() + " >> " + covoiturages.get(i).getDepartureAgencyName());
+                        offreItem.setCapacite(covoiturage.getCapacite() + " place(s) disponible(s)");
+
+                        String depart = covoiturage.getDepartureTime().replace("T", " ");
+                        String arrivee = covoiturage.getArrivalDate().replace("T", " ");
+                        java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRENCH);
+                        try {
+                            Date dep = df.parse(depart);
+                            Date arr = df.parse(arrivee);
+                            Format formatterdepart = new SimpleDateFormat("EEEE, dd MMMM yyyy, HH:mm");
+                            Format formatterarrivee = new SimpleDateFormat("HH:mm");
+                            String departOutput = formatterdepart.format(dep);
+                            String arriveeOutput = formatterarrivee.format(arr);
+                            offreItem.setDate(departOutput + "-" + arriveeOutput);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        data.add(offreItem);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onFailed(String result) {
+
+            }
+        });
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if(covoiturages!=null)
+        {
+            covoiturages.clear();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_booking_feeds, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        if(data!=null)
+        {
+            data.clear();
         }
+        return inflater.inflate(R.layout.mybookings_recyclerview, container, false);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        super.onViewCreated(view, savedInstanceState);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewMyoffers);
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        //permet un affichage sous forme liste verticale
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
+
+        mAdapter = new RecyclerViewMaterialAdapter(new MyBookingsFeedsFragmentAdapter(data));
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                // Save the position and pass it as an argument to the bundle so you can retrive the details later
+                //   Bundle bundle = fragment.getArguments();
+                //   bundle.putInteger("position",position);
+                //Intent serviceIntent = new Intent(getActivity().getApplicationContext(), MessageService.class);
+                //getActivity().startService(serviceIntent);
+                Intent intent =  new Intent(getActivity(), MessagingActivity.class);
+                //startActivity(intent);
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                // ...
+            }
+        }));
+
+        getData();
+        //penser à passer notre Adapter (ici : FeedsFragmentAdapter) à un RecyclerViewMaterialAdapter
+        //notifier le MaterialViewPager qu'on va utiliser une RecyclerView
+        MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }
 }

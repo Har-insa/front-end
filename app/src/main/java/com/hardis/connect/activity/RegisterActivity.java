@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         termAcceptation = (CheckBox) findViewById(R.id.terms);
         agencies = (Spinner) findViewById(R.id.agency);
         final List<String> agenciesName= AgencyController.getAgencies(getApplicationContext());
-
+        agenciesName.add(0,"Sélectionnez une agence");
         ArrayAdapter<String> dataAdapterR = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,agenciesName);
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         agencies.setSelection(0);

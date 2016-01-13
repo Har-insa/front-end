@@ -17,6 +17,7 @@ import com.hardis.connect.model.User;
 import com.hardis.connect.util.AllUrls;
 import com.hardis.connect.util.MessageUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -111,4 +112,57 @@ public class UserController {
         }
         RequestController.getInstance(context).addToRequestQueue(request);
     }
+
+    public static User getUser(final int userId,final Context context,final VolleyCallBack callBack) {
+        final User user;
+        StringRequest request = new StringRequest(Request.Method.GET, AllUrls.get_user_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v("getUser",response);
+                        JSONObject data = null;
+                        try {
+                            data = new JSONObject(response);
+                            for(int i=0;i<data.length();i++) {
+                                String firstName = data.getString("FirstName");
+                                String lastName = data.getString("Lastname");
+                                String userName = data.getString("Email");
+                                //user = new User(firstName,lastName,userName);
+                                Log.v("result",firstName);
+                                Log.v("result",lastName);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        }
+
+    }, new Response.ErrorListener(){
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            VolleyLog.d("Response", error.getMessage());
+        }
+    }
+    )
+    {
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String, String> params = new HashMap<String, String>();
+        SharedPreferences pref = context.getSharedPreferences("Hardis", 0);
+        String token =pref.getString("token",null);
+        params.put("Authorization", token);
+        return params;
+    }
+
+        @Override
+        public Map<String, String> getParams()  {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("id_user", String.valueOf(userId));
+        return params;
+    }
+    };
+
+    RequestController.getInstance(context).addToRequestQueue(request);
+    return null;
+    }
+
 }

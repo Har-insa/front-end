@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.hardis.connect.R;
 import com.hardis.connect.controller.AgencyController;
@@ -61,14 +62,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 address = query;
                 search.setIconified(true);
                 search.clearFocus();
+                try {
+                    if (!query.isEmpty()) {
+                        LatLng latLng = getLocationFromAddress(query);
+                        if (latLng != null) {
+                            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Veuillez saisir une addresse valide!", Toast.LENGTH_LONG);
+                        }
 
-                if (!query.isEmpty()) {
-                    LatLng latLng = getLocationFromAddress(query);
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Veuillez saisir une addresse!", Toast.LENGTH_LONG);
+                    }
+                }
+                catch(Exception e)
+                {
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "Veuillez saisir une addresse!", Toast.LENGTH_LONG);
                 }
                 return true;
             }
@@ -110,8 +120,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-            mMap = googleMap;
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        mMap = googleMap;
+        LatLng LYON = new LatLng(45.764043,4.835658999999964);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LYON, 12.0f));
+
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
                     Geocoder geoCoder = new Geocoder(MapsActivity.this);

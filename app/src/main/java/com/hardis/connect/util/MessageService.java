@@ -2,11 +2,11 @@ package com.hardis.connect.util;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
-import com.parse.ParseUser;
 import com.sinch.android.rtc.ClientRegistration;
 import com.sinch.android.rtc.Sinch;
 import com.sinch.android.rtc.SinchClient;
@@ -18,26 +18,24 @@ import com.sinch.android.rtc.messaging.WritableMessage;
 
 public class MessageService extends Service implements SinchClientListener {
 
-    private static final String APP_KEY = "key";
-    private static final String APP_SECRET = "secret";
+    private static final String APP_KEY = "c8c7efe8-8a39-4e8c-a177-9df30c3d8f07";
+    private static final String APP_SECRET = "0lrsWpu2OEOnbGQ+AvCfXg==";
     private static final String ENVIRONMENT = "sandbox.sinch.com";
     private final MessageServiceInterface serviceInterface = new MessageServiceInterface();
     private SinchClient sinchClient = null;
     private MessageClient messageClient = null;
     private String currentUserId;
-    private LocalBroadcastManager broadcaster;
-    private Intent broadcastIntent = new Intent("com.sinch.messagingtutorial.app.ListUsersActivity");
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        currentUserId = ParseUser.getCurrentUser().getObjectId();
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("Hardis", 0);
+        currentUserId =pref.getString("userName", null);
+        Log.v("currentUserId", currentUserId);
 
         if (currentUserId != null && !isSinchClientStarted()) {
             startSinchClient(currentUserId);
         }
-
-        broadcaster = LocalBroadcastManager.getInstance(this);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -61,17 +59,12 @@ public class MessageService extends Service implements SinchClientListener {
 
     @Override
     public void onClientFailed(SinchClient client, SinchError error) {
-        broadcastIntent.putExtra("success", false);
-        broadcaster.sendBroadcast(broadcastIntent);
-
         sinchClient = null;
     }
 
     @Override
     public void onClientStarted(SinchClient client) {
-        broadcastIntent.putExtra("success", true);
-        broadcaster.sendBroadcast(broadcastIntent);
-
+        Log.v("onclientstart","onclientstart");
         client.startListeningOnActiveConnection();
         messageClient = client.getMessageClient();
     }

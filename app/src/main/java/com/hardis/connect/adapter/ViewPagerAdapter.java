@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.hardis.connect.fragment.CovoiturageFeedsFragment;
 import com.hardis.connect.fragment.FeedsFragment;
+import com.hardis.connect.fragment.MyBookingFeedsFragment;
+import com.hardis.connect.fragment.MyOffersFeedsFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final String[] TITLES = {"Co-voiturage", "Evenement", "Hardis Life"};
+    private final String[] TITLES = {"Covoiturage", "Mes offres", "Mes réservations"};
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -27,9 +30,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return CovoiturageFeedsFragment.newInstance();
             case 1:
-                return FeedsFragment.newInstance();
+                return MyOffersFeedsFragment.newInstance();
             case 2:
-                return FeedsFragment.newInstance();
+                return MyBookingFeedsFragment.newInstance();
         }
         return null;
     }

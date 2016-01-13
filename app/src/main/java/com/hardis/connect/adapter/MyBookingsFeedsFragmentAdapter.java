@@ -28,7 +28,7 @@ public class MyBookingsFeedsFragmentAdapter extends RecyclerView.Adapter<MyBooki
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.myoffers_item_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mybookings_item_card, parent, false);
         return new MyViewHolder(view,viewType );
     }
 

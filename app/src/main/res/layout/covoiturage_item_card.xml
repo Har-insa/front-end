@@ -76,7 +76,7 @@
             <RelativeLayout
                 android:id="@+id/body"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="171dp"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:text="Lyon >> Grenoble"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_centerHorizontal="true"
                     />
 
@@ -93,11 +93,21 @@
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Demain à 10h00"
+                    android:layout_marginTop="3dp"
+                    android:text="Demain"
                     android:layout_centerInParent="true"
                     android:layout_below="@+id/trajet"
-                    android:textSize="25sp" />
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="10h00"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@+id/date"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/capacite"
@@ -105,19 +115,20 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/timestamp"
                     android:text="2 Place(s) disponible(s)"
-                    android:layout_below="@+id/date"
+                    android:layout_below="@+id/time"
                     android:textSize="@dimen/feed_item_timestamp"
                     />
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:layout_marginTop="5dp"
                     android:id="@+id/read_more"
                     android:layout_below="@+id/capacite"
                     android:background="@color/cyan"
                     android:text="Voir l'offre en detail"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerHorizontal="true"
+                    />
 
             </RelativeLayout>
 
