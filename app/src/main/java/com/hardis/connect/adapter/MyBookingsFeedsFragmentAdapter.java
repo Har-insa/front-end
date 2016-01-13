@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hardis.connect.R;
@@ -36,9 +37,13 @@ public class MyBookingsFeedsFragmentAdapter extends RecyclerView.Adapter<MyBooki
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         CovoiturageOffreItem current = contents.get(position);
-        holder.date.setText(current.getDate());;
+        holder.img.setImageResource(current.getImgResID());
+        holder.date.setText(current.getDate());
+        holder.time.setText(current.getTime());
         holder.trajet.setText(current.getTrajet());;
         holder.capcite.setText(current.getCapacite());;
+        holder.userName.setText(current.getUserName());;
+        holder.timeStamp.setText(current.getTimeStamp());;
     }
     @Override
     public int getItemCount() {
@@ -52,14 +57,24 @@ public class MyBookingsFeedsFragmentAdapter extends RecyclerView.Adapter<MyBooki
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView date;
+        TextView time;
         TextView trajet;
         TextView capcite;
+        TextView userName;
+        TextView timeStamp;
+        ImageView img;
+
+
 
         public MyViewHolder(View itemView, int ViewType) {
             super(itemView);
+            userName = (TextView) itemView.findViewById(R.id.userName);
             date =  (TextView) itemView.findViewById(R.id.date);
+            time =  (TextView) itemView.findViewById(R.id.time);
             trajet =  (TextView) itemView.findViewById(R.id.trajet);
             capcite = (TextView) itemView.findViewById(R.id.capacite);
+            timeStamp = (TextView) itemView.findViewById(R.id.timeStamp);
+            img = (ImageView) itemView.findViewById(R.id.profilePic);
         }
     }
 

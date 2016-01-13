@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.hardis.connect.R;
 import com.hardis.connect.model.CovoiturageOffreItem;
 
+import org.w3c.dom.Text;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class MyOffersFeedsFragmentAdapter extends RecyclerView.Adapter<MyOffersF
 
         CovoiturageOffreItem current = contents.get(position);
         holder.date.setText(current.getDate());;
+        holder.time.setText(current.getTime());
         holder.trajet.setText(current.getTrajet());;
         holder.capcite.setText(current.getCapacite());;
     }
@@ -53,12 +56,14 @@ public class MyOffersFeedsFragmentAdapter extends RecyclerView.Adapter<MyOffersF
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView date;
+        TextView time;
         TextView trajet;
         TextView capcite;
 
         public MyViewHolder(View itemView, int ViewType) {
             super(itemView);
             date =  (TextView) itemView.findViewById(R.id.date);
+            time =  (TextView) itemView.findViewById(R.id.time);
             trajet =  (TextView) itemView.findViewById(R.id.trajet);
             capcite = (TextView) itemView.findViewById(R.id.capacite);
         }

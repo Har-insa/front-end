@@ -9,6 +9,7 @@ public class CovoiturageOffreItem  {
     private String date;
     private String time;
     private String capacite;
+    private String email;
 
 
     public CovoiturageOffreItem() {
@@ -81,5 +82,11 @@ public class CovoiturageOffreItem  {
         this.capacite = capacite;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

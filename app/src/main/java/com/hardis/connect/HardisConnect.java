@@ -1,7 +1,9 @@
 package com.hardis.connect;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.multidex.MultiDex;
 
 import com.hardis.connect.util.MessageUser;
 import com.parse.Parse;
@@ -19,5 +21,11 @@ public class HardisConnect extends Application {
 
         Parse.initialize(this, "T8DMGrbZh7i69YfOMg2OiJrhMEBcR02RncN8Z4TF", "FFzlkrhCamOTZbSYTxM4vYYMzckuxGk0A5ZXheyN");
         ParseInstallation.getCurrentInstallation().saveInBackground();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

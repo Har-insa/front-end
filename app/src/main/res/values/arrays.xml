@@ -9,10 +9,13 @@
         <item>@mipmap/ic_local_atm_black_24dp</item>
 
         <item>@mipmap/ic_list_black_24dp</item>
+
+        <item>@mipmap/ic_restaurant_menu_black_24dp</item>
+        <item>@mipmap/ic_directions_run_black_24dp</item>
         <item>@mipmap/ic_movie_black_24dp</item>
         <item>@mipmap/ic_music_note_black_24dp</item>
-        <item>@mipmap/ic_directions_run_black_24dp</item>
-        <item>@mipmap/ic_restaurant_menu_black_24dp</item>
+
+
 
 
         <item>@mipmap/ic_list_black_24dp</item>

@@ -55,13 +55,16 @@ public class MyOffersFeedsFragment extends Fragment {
                         String arrivee = covoiturages.get(i).getArrivalDate().replace("T", " ");
                         java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRENCH);
                         try {
-                            Date dep = df.parse(depart);
+                            Date dep =  df.parse(depart);
                             Date arr = df.parse(arrivee);
-                            Format formatterdepart = new SimpleDateFormat("EEEE, dd MMMM yyyy, HH:mm");
+                            Format formatterdepart1 = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+                            Format formatterdepart2 = new SimpleDateFormat("HH:mm");
                             Format formatterarrivee = new SimpleDateFormat("HH:mm");
-                            String departOutput = formatterdepart.format(dep);
-                            String arriveeOutput = formatterarrivee.format(arr);
-                            offreItem.setDate(departOutput + "-" + arriveeOutput);
+                            String departOutput=formatterdepart1.format(dep);
+                            String departOutput1=formatterdepart2.format(dep);
+                            String arriveeOutput=formatterarrivee.format(arr);
+                            offreItem.setDate(departOutput);
+                            offreItem.setTime(departOutput1 + "-" + arriveeOutput);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }

@@ -44,9 +44,6 @@ public class PendingRequests extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         listItem = new ArrayList<>();
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle== null) return;
-
         Covoiturage covoiturage = (Covoiturage) getIntent().getSerializableExtra("covoiturage");
         CovoiturageController.getPendingRequest(covoiturage.getId(), getApplicationContext(), new VolleyCallBack() {
             @Override
@@ -74,15 +71,16 @@ public class PendingRequests extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
-
-                actualMap = (HashMap<String, String>) listView.getItemAtPosition(position);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(PendingRequests.this);
-                builder.setMessage("Are you sure you want to accept " + actualMap.get("username") + " ?")
+                builder.setMessage("Voulez-vous accepter ce membre?")
                         .setCancelable(false)
                         .setNegativeButton("Accepter", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 int requestId=users.get(position).getRequestId();
+                                Log.v("before",String.valueOf(listItem.size()));
+                                listItem.remove(position);
+                                Log.v("after", String.valueOf(listItem.size()));
+                                mSchedule.notifyDataSetChanged();
                                 launch(requestId,2,position);
 
                             }
@@ -90,7 +88,7 @@ public class PendingRequests extends AppCompatActivity {
                         .setNeutralButton("Refuser", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         int requestId=users.get(position).getRequestId();
-                                        users.remove(position);
+                                        listItem.remove(position);
                                         mSchedule.notifyDataSetChanged();
                                         launch(requestId,3,position);
                                     }
@@ -109,8 +107,10 @@ public class PendingRequests extends AppCompatActivity {
     }
 
     private void launch(int idRequest, int idAction,int position) {
-        CovoiturageController.acceptRequest(idRequest,idAction,getApplicationContext());
-        users.remove(position);
-        mSchedule.notifyDataSetChanged();
+        CovoiturageController.acceptRequest(idRequest, idAction, getApplicationContext());
+    }
+
+    private void reload() {
+
     }
 }
