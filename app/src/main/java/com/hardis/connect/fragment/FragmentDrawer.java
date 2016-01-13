@@ -4,8 +4,6 @@ package com.hardis.connect.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hardis.connect.R;
-import com.hardis.connect.activity.MyOffers;
 import com.hardis.connect.adapter.NavigationDrawerAdapter;
 import com.hardis.connect.model.NavDrawerItem;
 import com.hardis.connect.util.GlobalMethodes;
@@ -98,9 +95,7 @@ public class FragmentDrawer extends Fragment {
         barcode = (ImageView) layout.findViewById(R.id.barcode);
         accountIcon =  (ImageButton) layout.findViewById(R.id.imageView);
         textViewLogIn = (TextView) layout.findViewById(R.id.user_name_label);
-        SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("Hardis", 0);
-        String userName  =pref.getString("userName",null);
-        textViewLogIn.setText(userName);
+        textViewLogIn.setText(GlobalMethodes.username);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -108,10 +103,7 @@ public class FragmentDrawer extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if(position == 8) {
-                    startActivity(new Intent(getActivity(), MyOffers.class));
-                }
-                else if (position != 1 && position != 6 && position != 9 && position!= 12 && position !=3 && position !=4 && position !=7 && position !=8 && position != 13) {
+                if (position == 0 || position == 2 || position == 14) {
                     drawerListener.onDrawerItemSelected(view, position);
                     mDrawerLayout.closeDrawer(containerView);
                 }
@@ -120,7 +112,7 @@ public class FragmentDrawer extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                if (position != 1 && position != 6 && position != 10 && position!= 12) {
+                if (position != 1 && position != 4 && position != 9 && position!= 12) {
                     drawerListener.onDrawerItemSelected(view, position);
                     mDrawerLayout.closeDrawer(containerView);
                 }
